@@ -52,40 +52,54 @@ Welcome to **Seneca Eats** – a smart and responsive web platform that helps **
    cd cafeteriaapp
    ```
 
-2. **IDE Setup**
-   - Open project in IntelliJ IDEA
-   - Enable auto-import for Maven
-   - Configure Java 17 SDK
-
-3. **Build and Run**
+2. **Build and Run the Project**
    ```bash
    ./mvnw clean install
    ./mvnw spring-boot:run
    ```
 
-4. **Access the Application**
-   - Open browser
+3. **Access the Application**
+   - Open your browser
    - Navigate to `http://localhost:8080`
 
 ### ⚙️ Troubleshooting
 
-- **Port Conflict**: Change port in `application.properties`: `server.port=8081`
-- **Build Issues**: Run `./mvnw clean install -U` to force update dependencies
-- **Java Version**: Ensure Java 17 is installed: `java -version`
+- 🔁 **Maven Wrapper**  
+  Regenerate: `mvn wrapper:wrapper`
 
-## 📁 Project Structure
+- ☕ **Java Version**  
+  Must be Java 17+: `java -version`
+
+- 🧹 **Dependencies**  
+  Clean: `./mvnw clean`  
+  Purge: `./mvnw dependency:purge-local-repository`
+
+- ⚠️ **Port Issue**  
+  Default: `8080`  
+  Change in `application.properties`:  
+  `server.port=8081`
+
+## 📁 Important Project Structure
 
 ```
 src/
 ├── main/
 │   ├── java/
 │   │   └── com/seneca/cafeteria/cafeteriaapp/
-│   │       ├── controllers/    # MVC Controllers
-│   │       └── models/         # Data Models
+│   │       ├── controllers/
+│   │       │   ├── HomeController.java
+│   │       │   └── LoginController.java
+│   │       ├── models/
+│   │       │   └── EatingPlace.java
+│   │       └── CafeteriaappApplication.java
 │   └── resources/
-│       ├── static/            # Static assets
-│       └── templates/         # Thymeleaf templates
-└── test/                      # Unit tests
+│       └── templates/
+│           ├── index.html
+│           ├── login.html
+│           ├── about.html
+│           ├── area-select.html
+│           └── area-menu.html
+├── README.md
 ```
 
 ## 🔑 Login Credentials
