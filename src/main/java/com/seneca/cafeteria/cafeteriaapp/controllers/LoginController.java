@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 @Controller
 public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-    private static final String DEMO_EMAIL = "fl.ln@myseneca.ca";
-    private static final String DEMO_PASSWORD = "flln";
+    private static final String DEMO_EMAIL = "demo@senecaeats.com";
+    private static final String DEMO_PASSWORD = "demo123";
     private static final String USER_NAME_ATTR = "userName";
     private static final String IS_LOGGED_IN_ATTR = "isLoggedIn";
 
