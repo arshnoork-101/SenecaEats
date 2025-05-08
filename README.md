@@ -76,7 +76,7 @@ Welcome to **Seneca Eats** – a smart and responsive web platform that helps **
   Change in `application.properties`:  
   `server.port=8081`
 
-## 📁 Project Structure
+## 📁 Important Project Structure
 
 ```
 src/
@@ -97,7 +97,6 @@ src/
 │           ├── area-select.html
 │           └── area-menu.html
 ├── README.md
-└── requirements.txt
 ```
 
 ## 🔑 Login Credentials
