@@ -79,27 +79,19 @@ Welcome to **Seneca Eats** – a smart and responsive web platform that helps **
   Change in `application.properties`:  
   `server.port=8081`
 
-## 📁 Important Project Structure
+## 📁 Project Structure
 
 ```
 src/
 ├── main/
 │   ├── java/
 │   │   └── com/seneca/cafeteria/cafeteriaapp/
-│   │       ├── controllers/
-│   │       │   ├── HomeController.java
-│   │       │   └── LoginController.java
-│   │       ├── models/
-│   │       │   └── EatingPlace.java
-│   │       └── CafeteriaappApplication.java
+│   │       ├── controllers/    # MVC Controllers
+│   │       └── models/         # Data Models
 │   └── resources/
-│       └── templates/
-│           ├── index.html
-│           ├── login.html
-│           ├── about.html
-│           ├── area-select.html
-│           └── area-menu.html
-├── README.md
+│       ├── static/            # Static assets
+│       └── templates/         # Thymeleaf templates
+└── test/                      # Unit tests
 ```
 
 ## 🔑 Login Credentials
