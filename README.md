@@ -6,6 +6,18 @@ Welcome to **Seneca Eats** – a smart and responsive web platform that helps **
 
 ---
 
+### 🎯 Problem Statement
+- Difficulty in finding food services across multiple campuses
+- Lack of centralized menu information
+- Inconsistent operating hours access
+- Poor mobile experience for on-the-go students
+
+### 💡 Solution
+- Centralized platform for all campus food services
+- Real-time menu and hours information
+- Mobile-first responsive design
+- User-friendly interface
+
 ## 🚀 Tech Stack
 
 ### 🔙 Backend
@@ -29,15 +41,6 @@ Welcome to **Seneca Eats** – a smart and responsive web platform that helps **
 - 🕒 **Operating Hours**: Display real-time hours of operation
 - 🔐 **User Authentication**: Secure login functionality
 - 📱 **Responsive UI**: Works seamlessly across devices
-
----
-
-## 📋 Requirements
-
-- ✅ Java 17+
-- ✅ Maven 3.6+
-- ✅ Git
-- ✅ Modern web browser
 
 ---
 
