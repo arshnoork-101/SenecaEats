@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Seneca Eats</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #1E1E1E;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #DA291C;
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .brand-title {
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .navbar-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar-links li a,
+        .overlay-links li a {
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+        }
+        .navbar-links li a::after,
+        .overlay-links li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0;
+            height: 1px;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        .navbar-links li a:hover::after,
+        .overlay-links li a:hover::after {
+            width: 100%;
+        }
+        .toggle-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            display: none;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        .toggle-button:hover {
+            transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+            .toggle-button {
+                display: block;
+                margin-left: auto;
+            }
+            .navbar-links {
+                display: none !important;
+            }
+            .navbar-links.show {
+                display: flex !important;
+            }
+            .overlay {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                background-color: white;
+                color: black;
+                z-index: 2000;
+                transition: right 0.3s ease-in-out;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                padding-top: 80px;
+                width: 100%;
+                height: 100%;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .overlay.show {
+                right: 0;
+            }
+            .overlay-links {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: center;
+                width: 100%;
+            }
+            .overlay-links li {
+                margin: 25px 0;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.3s ease;
+            }
+            .overlay.show .overlay-links li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            .overlay-links li:nth-child(1) { transition-delay: 0.1s; }
+            .overlay-links li:nth-child(2) { transition-delay: 0.2s; }
+            .overlay-links li:nth-child(3) { transition-delay: 0.3s; }
+            .overlay-links li:nth-child(4) { transition-delay: 0.4s; }
+            .overlay-links li a {
+                font-size: 1.2rem;
+                color: #1E1E1E;
+                text-decoration: none;
+                padding: 10px 20px;
+                display: inline-block;
+                transition: all 0.3s ease;
+                border-radius: 5px;
+            }
+            .overlay-links li a:hover {
+                background-color: #DA291C;
+                color: white;
+                transform: translateX(5px);
+            }
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+            .brand-title {
+                font-size: 1.8rem;
+            }
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            background-color: white;
+            color: black;
+            z-index: 2000;
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 60px;
+            width: max-content;
+            height: 100%;
+            min-width: fit-content;
+        }
+        .overlay.show {
+            right: 0;
+        }
+        .overlay-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+        .overlay-links li {
+            margin: 20px;
+        }
+        .overlay-links li a {
+            font-size: 1rem;
+            color: black;
+        }
+        .back-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1;
+        }
+        .back-button:hover {
+            color: #f8f9fa;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .about-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .about-section h1 {
+            color: #DA291C;
+            margin-bottom: 1.5rem;
+        }
+        .about-section p {
+            color: #1E1E1E;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .overview-title {
+            font-size: 1.8rem;
+            color: #DA291C;
+            margin: 2rem 0 1rem 0;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 1.4rem;
+            color: #DA291C;
+            margin: 2rem 0 1rem 0;
+            border-left: 5px solid #DA291C;
+            padding-left: 1rem;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .service-card.featured {
+            grid-column: 1 / -1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(to right, #fff, #fff8f8);
+            border: 1px solid rgba(218, 41, 28, 0.1);
+        }
+        .service-card.featured .service-image {
+            height: 500px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+            width: 100%;
+        }
+        .service-card.featured .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .service-card.featured .service-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .service-card.featured .service-meta {
+            font-size: 1.05rem;
+            margin-bottom: 0.8rem;
+        }
+        .service-card.featured .service-link {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background-color: #DA291C;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .service-card.featured .service-link:hover {
+            background-color: #b51e17;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(218, 41, 28, 0.2);
+        }
+        .service-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #DA291C;
+            margin-bottom: 1rem;
+        }
+        .service-desc {
+            color: #1E1E1E;
+            margin-bottom: 1rem;
+        }
+        .service-meta {
+            color: #1E1E1E;
+            margin-bottom: 0.5rem;
+        }
+        .service-link {
+            color: #DA291C;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        .service-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <span class="brand-title">Seneca Eats</span>
+        <ul class="navbar-links">
+            <li><a href="/">HOME</a></li>
+            <li><a href="/about">ABOUT</a></li>
+            <li><a href="/contact">CONTACT US</a></li>
+            <li><a href="/login">LOGIN</a></li>
+        </ul>
+        <button class="toggle-button" onclick="toggleNavbar()">☰</button>
+    </nav>
+
+    <!-- Mobile overlay -->
+    <div class="overlay" id="mobileMenu">
+        <ul class="overlay-links">
+            <li><a href="/">HOME</a></li>
+            <li><a href="/about">ABOUT</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/login">LOGIN</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="about-section">
+            <h1>About Seneca Eats</h1>
+            <p>Welcome to Seneca Eats, your premier dining destination across Seneca Polytechnic's campuses. We are committed to providing high-quality, diverse, and nutritious food options to our students, faculty, and staff.</p>
+            
+            <p>Our mission is to create a welcoming and inclusive dining environment that caters to various dietary preferences and requirements. We take pride in offering a wide range of culinary choices, from international cuisines to local favorites, all prepared with fresh ingredients and sustainable practices.</p>
+            
+            <p>At Seneca Eats, we understand the importance of healthy eating in academic success. That's why we work closely with nutritionists and food service professionals to ensure our menu items meet the highest standards of quality and nutrition.</p>
+            
+            <p>We are constantly evolving and improving our services based on community feedback. Your satisfaction is our priority, and we welcome your suggestions to help us better serve you.</p>
+        </div>
+
+        <div class="overview-title">Seneca Eats Services Overview</div>
+        <p style="text-align: center; color: #1E1E1E; margin-bottom: 2rem;">
+            This overview outlines the various food-related services and support available to Seneca College students.
+        </p>
+
+        <div class="section-title">I. Food Support Programs</div>
+        <div class="card-grid">
+            <div class="service-card featured">
+                <img src="/static/images/FoodBankService.jpg" alt="Food Bank Service" class="service-image">
+                <div class="service-title">SSF Eats – Food Support Program (Food Bank)</div>
+                <div class="service-desc">Provides monthly food assistance to full-time Seneca students in need, offered as food hampers or grocery gift cards. This program is designed to support students facing food insecurity and ensure they can focus on their academic success.</div>
+                <div class="service-meta"><strong>Eligibility:</strong> Must be enrolled full-time during the Summer 2025 semester.</div>
+                <div class="service-meta"><strong>Registration:</strong> Monthly registration is required and limited to 400 students.</div>
+                <a class="service-link" href="#" target="_blank">Apply Now: SSF Eats Food Support Program</a>
+            </div>
+        </div>
+
+        <div class="section-title">II. Campus Dining Facilities</div>
+        <div class="card-grid">
+            <div class="service-card">
+                <img src="/static/images/MicrowaveStations.jpg" alt="Microwave Stations" class="service-image">
+                <div class="service-title">Microwave Stations</div>
+                <div class="service-desc">Convenient microwave stations available across campus for students to heat their meals.</div>
+            </div>
+            <div class="service-card">
+                <img src="/static/images/VendingMachines.jpg" alt="Vending Machines" class="service-image">
+                <div class="service-title">Vending Machines</div>
+                <div class="service-desc">24/7 access to snacks and beverages through strategically placed vending machines.</div>
+            </div>
+            <div class="service-card">
+                <img src="/static/images/ConvenienceStore.jpg" alt="Convenience Store" class="service-image">
+                <div class="service-title">Convenience Store</div>
+                <div class="service-desc">On-campus convenience store offering a variety of snacks, beverages, and essential items.</div>
+            </div>
+        </div>
+
+        <div class="section-title">III. Special Services</div>
+        <div class="card-grid">
+            <div class="service-card">
+                <img src="/static/images/CulturalEvents.jpg" alt="Cultural Events" class="service-image">
+                <div class="service-title">Cultural Events</div>
+                <div class="service-desc">Special dining events celebrating diverse cultures and cuisines throughout the academic year.</div>
+            </div>
+            <div class="service-card">
+                <img src="/static/images/ExamReliefService.jpg" alt="Exam Relief Service" class="service-image">
+                <div class="service-title">Exam Relief Service</div>
+                <div class="service-desc">Special meal services and extended hours during exam periods to support students.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleNavbar() {
+            const overlay = document.getElementById('mobileMenu');
+            overlay.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const overlay = document.getElementById('mobileMenu');
+            const toggleButton = document.querySelector('.toggle-button');
+            const isClickInsideMenu = overlay.contains(event.target);
+            const isClickOnButton = toggleButton.contains(event.target);
+
+            if (overlay.classList.contains('show') && !isClickInsideMenu && !isClickOnButton) {
+                overlay.classList.remove('show');
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer style="position: relative; background: #444 url('/static/images/Seneca-Food%20Hall.jpg') center/cover no-repeat; color: white; margin-top: 60px; font-family: Arial, sans-serif;">
+        <div style="position: absolute; inset: 0; background: rgba(40,40,40,0.75); z-index: 0;"></div>
+        <div style="position: relative; max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: stretch; gap: 40px; padding: 60px 30px 30px 30px; z-index: 1;">
+            <div style="flex: 1 1 250px; min-width: 250px;">
+                <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Seneca Eats</h3>
+                <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                    <li style="margin-bottom: 8px;"><strong style="color: #DA291C;">Locations:</strong></li>
+                    <li>Newnham Campus</li>
+                    <li>Seneca@York Campus</li>
+                    <li>King Campus</li>
+                </ul>
+            </div>
+            <div style="flex: 1 1 250px; min-width: 250px;">
+                <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Hours</h3>
+                <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                    <li><strong style="color: #DA291C;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
+                    <li><strong style="color: #DA291C;">Weekends:</strong> Varies by location</li>
+                </ul>
+            </div>
+            <div style="flex: 1 1 250px; min-width: 250px;">
+                <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Contact</h3>
+                <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                    <li><strong style="color: #DA291C;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
+                    <li><strong style="color: #DA291C;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
+                    <li><strong style="color: #DA291C;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
+                </ul>
+            </div>
+            <div style="flex: 1 1 250px; min-width: 250px;">
+                <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Connect</h3>
+                <div style="display: flex; gap: 20px; margin-top: 10px;">
+                    <a href="https://www.instagram.com/senecapolytechnic/" target="_blank" aria-label="Instagram" style="color: #fff; font-size: 1.5rem; transition: color 0.3s;"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.425 3.678 1.406c-.98.98-1.274 2.092-1.334 3.374C2.013 8.332 2 8.741 2 12c0 3.259.013 3.668.072 4.948.06 1.282.354 2.394 1.334 3.374.98.98 2.092 1.274 3.374 1.334C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.282-.06 2.394-.354 3.374-1.334.98-.98 1.274-2.092 1.334-3.374.059-1.28.072-1.689.072-4.948 0-3.259-.013-3.668-.072-4.948-.06-1.282-.354-2.394-1.334-3.374-.98-.98-2.092-1.274-3.374-1.334C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+                    <a href="https://twitter.com/SenecaPoly" target="_blank" aria-label="Twitter" style="color: #fff; font-size: 1.5rem; transition: color 0.3s;"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.83 9.83 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.916 4.916 0 0 0-8.38 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.856 2.01-.857 3.37 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 0 1 0 21.543a13.94 13.94 0 0 0 7.548 2.209c9.142 0 14.307-7.721 13.995-14.646A9.936 9.936 0 0 0 24 4.557z"/></svg></a>
+                    <a href="https://www.facebook.com/SenecaPolytechnic/" target="_blank" aria-label="Facebook" style="color: #fff; font-size: 1.5rem; transition: color 0.3s;"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24H12.82v-9.294H9.692v-3.622h3.127V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0"/></svg></a>
+                    <a href="https://www.linkedin.com/school/seneca-college/" target="_blank" aria-label="LinkedIn" style="color: #fff; font-size: 1.5rem; transition: color 0.3s;"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76c.97 0 1.75.79 1.75 1.76s-.78 1.76-1.75 1.76zm15.25 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z"/></svg></a>
+                    <a href="https://www.youtube.com/user/SenecaCollege/" target="_blank" aria-label="YouTube" style="color: #fff; font-size: 1.5rem; transition: color 0.3s;"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a2.994 2.994 0 0 0-2.112-2.112C19.458 3.5 12 3.5 12 3.5s-7.458 0-9.386.574a2.994 2.994 0 0 0-2.112 2.112C0 8.114 0 12 0 12s0 3.886.502 5.814a2.994 2.994 0 0 0 2.112 2.112C4.542 20.5 12 20.5 12 20.5s7.458 0 9.386-.574a2.994 2.994 0 0 0 2.112-2.112C24 15.886 24 12 24 12s0-3.886-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                </div>
+            </div>
+        </div>
+        <div style="position: relative; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; padding: 20px 0; text-align: center; z-index: 1;">
+            <span style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">© 2025 Seneca Eats. All rights reserved.</span>
+            <a href="/privacy" style="color: rgba(255,255,255,0.8); margin-left: 20px; text-decoration: none; font-size: 0.9rem; transition: color 0.3s;">Privacy Notice</a>
+        </div>
+    </footer>
+</body>
+</html> 

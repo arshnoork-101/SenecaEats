@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            color: #1E1E1E;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: rgb(218, 41, 28);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            position: relative;
+            width: 260px;
+            height: 180px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            background-color: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(30, 30, 30, 0.7);
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            padding: 1rem 0;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-header h2 {
+            color: rgb(218, 41, 28);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+
+        .close-button:hover {
+            color: rgb(218, 41, 28);
+        }
+
+        .menu-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-items li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .menu-items li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-info {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hours-info p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        .hours-info strong {
+            color: rgb(218, 41, 28);
+        }
+
+        .no-items {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<h1 th:text="'Menu for ' + ${area}">Menu for Campus Area</h1>
+
+<div class="container">
+    <!-- Starbucks Menu -->
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Hot Coffee</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Cold Coffee</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Hot Tea</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Cold Tea</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Refreshers</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Frappuccino</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Breakfast</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Bakery</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Treats</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Lunch</h3>
+    </div>
+    <div th:if="${area == 'starbucks'}" class="card" onclick="showStarbucksMenu()">
+        <h3>Snacks</h3>
+    </div>
+
+    <!-- Tim Hortons Menu -->
+    <div th:if="${area == 'timhortons'}" class="card" onclick="showTimHortonsMenu()">
+        <h3>Popular Items</h3>
+    </div>
+
+    <!-- Marketplace Menu -->
+    <div th:if="${area == 'marketplace'}" class="card" onclick="showMarketplaceMenu()">
+        <h3>Popular Items</h3>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="menuModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Menu Category</h2>
+            <button class="close-button" onclick="closeModal()">&times;</button>
+        </div>
+        <ul class="menu-items" id="modalItems">
+            <!-- Items will be populated by JavaScript -->
+        </ul>
+    </div>
+</div>
+
+<div class="hours-info">
+    <p><strong>Operating Hours:</strong></p>
+    <p th:text="'Open: ' + ${openTime} + ' - Close: ' + ${closeTime}">Hours</p>
+</div>
+
+<script>
+    // Starbucks Menu Data
+    const starbucksMenu = {
+        'Hot Coffee': ['Pike Place® Roast', 'Caffè Americano', 'Flat White'],
+        'Cold Coffee': ['Iced Coffee', 'Cold Brew', 'Nitro Cold Brew'],
+        'Hot Tea': ['Chai Tea', 'Earl Grey', 'Jade Citrus Mint®'],
+        'Cold Tea': ['Iced Green Tea', 'Iced Black Tea', 'Iced Passion Tango®'],
+        'Refreshers': ['Strawberry Açaí', 'Mango Dragonfruit', 'Pineapple Passionfruit'],
+        'Frappuccino': ['Caramel Frappuccino®', 'Mocha Frappuccino®', 'Java Chip Frappuccino®'],
+        'Breakfast': ['Bacon & Gouda Sandwich', 'Spinach & Feta Wrap', 'Oatmeal'],
+        'Bakery': ['Butter Croissant', 'Bagel with Cream Cheese', 'Banana Bread'],
+        'Treats': ['Cake Pop', 'Chocolate Chip Cookie', 'Brownie'],
+        'Lunch': ['Turkey Panini', 'Protein Box', 'Chicken Wrap'],
+        'Snacks': ['String Cheese', 'Granola Bar', 'Chips']
+    };
+
+    // Tim Hortons Menu Data
+    const timHortonsMenu = {
+        'Popular Items': ['Iced Capp', 'Timbits', 'Bagel with Cream Cheese']
+    };
+
+    // Marketplace Menu Data
+    const marketplaceMenu = {
+        'Popular Items': ['Pizza', 'Salad', 'Sandwiches']
+    };
+
+    function showStarbucksMenu() {
+        const modal = document.getElementById('menuModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalItems = document.getElementById('modalItems');
+        
+        // Get the clicked category from the card's h3 text
+        const category = event.target.closest('.card').querySelector('h3').textContent;
+        
+        // Set the title
+        modalTitle.textContent = category;
+        
+        // Clear previous items
+        modalItems.innerHTML = '';
+        
+        // Add new items
+        const items = starbucksMenu[category] || [];
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            modalItems.appendChild(li);
+        });
+        
+        // Show modal
+        modal.style.display = 'flex';
+    }
+
+    function showTimHortonsMenu() {
+        const modal = document.getElementById('menuModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalItems = document.getElementById('modalItems');
+        
+        // Set the title
+        modalTitle.textContent = 'Popular Items';
+        
+        // Clear previous items
+        modalItems.innerHTML = '';
+        
+        // Add new items
+        const items = timHortonsMenu['Popular Items'];
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            modalItems.appendChild(li);
+        });
+        
+        // Show modal
+        modal.style.display = 'flex';
+    }
+
+    function showMarketplaceMenu() {
+        const modal = document.getElementById('menuModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalItems = document.getElementById('modalItems');
+        
+        // Set the title
+        modalTitle.textContent = 'Popular Items';
+        
+        // Clear previous items
+        modalItems.innerHTML = '';
+        
+        // Add new items
+        const items = marketplaceMenu['Popular Items'];
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            modalItems.appendChild(li);
+        });
+        
+        // Show modal
+        modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+        const modal = document.getElementById('menuModal');
+        modal.style.display = 'none';
+    }
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('menuModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>

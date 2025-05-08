@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Select Eating Area - ' + ${campus}">Select Eating Area</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #1E1E1E;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: rgb(218, 41, 28);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-button {
+            background-color: white;
+            color: rgb(218, 41, 28);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+            transform: translateX(-2px);
+        }
+
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-decoration: none;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            background-color: transparent;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            transition: opacity 0.4s ease;
+        }
+
+        .image-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .card-body {
+            padding: 20px;
+            background-color: #f4f4f4 !important;
+        }
+
+        .card-body h3 {
+            margin: 0;
+            font-size: 20px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 2% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close:hover {
+            color: rgb(218, 41, 28);
+        }
+
+        .menu-category {
+            margin-bottom: 30px;
+        }
+
+        .menu-category h3 {
+            color: rgb(218, 41, 28);
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .menu-item-details {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .menu-item-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .menu-item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgb(218, 41, 28);
+        }
+
+        .menu-item-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .menu-item-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .menu-item-tag {
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <button class="back-button" onclick="window.location.href='/'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        Back to Campuses
+    </button>
+    <h1 th:text="'Select a Food Area at ' + ${campus} + ' Campus'">Select a Food Area</h1>
+    <div style="width: 100px;"></div> <!-- Spacer for flex alignment -->
+</header>
+
+<div class="container">
+    <div th:each="place : ${places}" class="card" onclick="showMenu(this)" th:data-place="${place.name}">
+        <div class="image-container">
+            <img th:src="@{'/images/' + ${place.name.toLowerCase()} + '.png'}" th:alt="${place.name}">
+            <div class="overlay">View Menu</div>
+        </div>
+        <div class="card-body">
+            <h3 th:text="${place.name}"></h3>
+            <p>Hours: <span th:text="${place.openTime} + ' - ' + ${place.closeTime}"></span></p>
+            <p>Status:
+                <span th:if="${#dates.format(#dates.createNow(), 'HH:mm') >= place.openTime and #dates.format(#dates.createNow(), 'HH:mm') <= place.closeTime}"
+                      class="text-green-600">Open</span>
+                <span th:unless="${#dates.format(#dates.createNow(), 'HH:mm') >= place.openTime and #dates.format(#dates.createNow(), 'HH:mm') <= place.closeTime}"
+                      class="text-red-600">Closed</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Menu -->
+<div id="menuModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="placeName"></h2>
+        <div id="menuContent"></div>
+    </div>
+</div>
+
+<script>
+    // Hardcoded menu data with images and descriptions
+    const menuData = {
+        'Starbucks': {
+            'Hot Coffee': [
+                {
+                    name: 'Pike Place® Roast',
+                    price: '$2.95',
+                    description: 'A smooth, well-rounded blend of Latin American coffees with subtle notes of cocoa and toasted nuts.',
+                    image: '/images/pike_place.jpg',
+                    tags: ['Signature', 'Medium Roast']
+                },
+                {
+                    name: 'Caffè Americano',
+                    price: '$3.25',
+                    description: 'Espresso shots topped with hot water to create a light layer of crema.',
+                    image: '/images/americano.jpg',
+                    tags: ['Espresso', 'Hot']
+                },
+                {
+                    name: 'Flat White',
+                    price: '$4.25',
+                    description: 'Bold ristretto shots of espresso get the perfect amount of steamed whole milk.',
+                    image: '/images/flat_white.jpg',
+                    tags: ['Espresso', 'Milk']
+                }
+            ],
+            'Cold Coffee': [
+                {
+                    name: 'Iced Coffee',
+                    price: '$3.25',
+                    description: 'Freshly brewed Starbucks® Iced Coffee Blend served chilled and sweetened over ice.',
+                    image: '/images/iced_coffee.jpg',
+                    tags: ['Cold', 'Classic']
+                },
+                {
+                    name: 'Cold Brew',
+                    price: '$4.25',
+                    description: 'Slow-steeped, smooth, naturally sweet, never bitter.',
+                    image: '/images/cold_brew.jpg',
+                    tags: ['Cold', 'Strong']
+                }
+            ],
+            'Hot Tea': ['Chai Tea', 'Earl Grey', 'Jade Citrus Mint®'],
+            'Cold Tea': ['Iced Green Tea', 'Iced Black Tea', 'Iced Passion Tango®'],
+            'Refreshers': ['Strawberry Açaí', 'Mango Dragonfruit', 'Pineapple Passionfruit'],
+            'Frappuccino': ['Caramel Frappuccino®', 'Mocha Frappuccino®', 'Java Chip Frappuccino®'],
+            'Breakfast': [
+                {
+                    name: 'Bacon & Gouda Sandwich',
+                    price: '$5.95',
+                    description: 'Applewood smoked bacon, aged Gouda, and egg on a croissant bun.',
+                    image: '/images/bacon_gouda.jpg',
+                    tags: ['Hot', 'Breakfast']
+                },
+                {
+                    name: 'Spinach & Feta Wrap',
+                    price: '$5.25',
+                    description: 'Cage-free egg whites, spinach, and feta cheese wrapped in a whole wheat tortilla.',
+                    image: '/images/spinach_feta.jpg',
+                    tags: ['Vegetarian', 'Breakfast']
+                }
+            ],
+            'Bakery': ['Butter Croissant', 'Bagel with Cream Cheese', 'Banana Bread'],
+            'Treats': ['Cake Pop', 'Chocolate Chip Cookie', 'Brownie'],
+            'Lunch': ['Turkey Panini', 'Protein Box', 'Chicken Wrap'],
+            'Snacks': ['String Cheese', 'Granola Bar', 'Chips']
+        },
+        'Tim Hortons': {
+            'Popular Items': [
+                {
+                    name: 'Iced Capp',
+                    price: '$3.99',
+                    description: 'A refreshing blend of coffee, cream, and ice.',
+                    image: '/images/iced_capp.jpg',
+                    tags: ['Cold', 'Signature']
+                },
+                {
+                    name: 'Timbits',
+                    price: '$0.50 each',
+                    description: 'Bite-sized donut holes available in various flavors.',
+                    image: '/images/timbits.jpg',
+                    tags: ['Snack', 'Sweet']
+                },
+                {
+                    name: 'Bagel with Cream Cheese',
+                    price: '$2.99',
+                    description: 'Freshly baked bagel with smooth cream cheese spread.',
+                    image: '/images/bagel.jpg',
+                    tags: ['Breakfast', 'Classic']
+                }
+            ]
+        },
+        'The Market': {
+            'Popular Items': [
+                {
+                    name: 'Margherita Pizza',
+                    price: '$6.99',
+                    description: 'Fresh mozzarella, tomatoes, and basil on our signature crust.',
+                    image: '/images/margherita.jpg',
+                    tags: ['Hot', 'Vegetarian']
+                },
+                {
+                    name: 'Caesar Salad',
+                    price: '$5.99',
+                    description: 'Crisp romaine lettuce, parmesan cheese, croutons, and Caesar dressing.',
+                    image: '/images/caesar.jpg',
+                    tags: ['Cold', 'Healthy']
+                }
+            ]
+        },
+        'Grill': {
+            'Popular Items': [
+                {
+                    name: 'Classic Cheeseburger',
+                    price: '$7.99',
+                    description: 'Juicy beef patty with melted cheddar cheese, fresh lettuce, tomatoes, and special sauce on a toasted brioche bun.',
+                    image: '/images/cheeseburger.jpg',
+                    tags: ['Hot', 'Popular']
+                },
+                {
+                    name: 'Crispy Chicken Wings',
+                    price: '$8.99',
+                    description: '8 pieces of crispy fried wings tossed in your choice of Buffalo, BBQ, or Honey Garlic sauce.',
+                    image: '/images/chicken_wings.jpg',
+                    tags: ['Hot', 'Spicy']
+                },
+                {
+                    name: 'Loaded Fries',
+                    price: '$5.99',
+                    description: 'Crispy golden fries topped with melted cheese, bacon bits, green onions, and our special sauce.',
+                    image: '/images/loaded_fries.jpg',
+                    tags: ['Hot', 'Shareable']
+                },
+                {
+                    name: 'Grilled Chicken Sandwich',
+                    price: '$6.99',
+                    description: 'Grilled chicken breast with avocado, lettuce, and chipotle mayo on a whole wheat bun.',
+                    image: '/images/chicken_sandwich.jpg',
+                    tags: ['Hot', 'Healthy']
+                }
+            ],
+            'Sides': [
+                {
+                    name: 'Onion Rings',
+                    price: '$3.99',
+                    description: 'Crispy beer-battered onion rings served with dipping sauce.',
+                    image: '/images/onion_rings.jpg',
+                    tags: ['Hot', 'Crispy']
+                },
+                {
+                    name: 'Coleslaw',
+                    price: '$2.99',
+                    description: 'Fresh cabbage and carrots in a creamy dressing.',
+                    image: '/images/coleslaw.jpg',
+                    tags: ['Cold', 'Healthy']
+                }
+            ]
+        },
+        'Pizza+Pasta': {
+            'Pizza': [
+                {
+                    name: 'Margherita Pizza',
+                    price: '$9.99',
+                    description: 'Classic pizza with fresh mozzarella, tomatoes, and basil on our signature thin crust.',
+                    image: '/images/margherita_pizza.jpg',
+                    tags: ['Hot', 'Vegetarian']
+                },
+                {
+                    name: 'Pepperoni Pizza',
+                    price: '$10.99',
+                    description: 'Loaded with pepperoni and mozzarella cheese on our signature crust.',
+                    image: '/images/pepperoni_pizza.jpg',
+                    tags: ['Hot', 'Popular']
+                },
+                {
+                    name: 'BBQ Chicken Pizza',
+                    price: '$11.99',
+                    description: 'Grilled chicken, red onions, and BBQ sauce on our signature crust.',
+                    image: '/images/bbq_chicken_pizza.jpg',
+                    tags: ['Hot', 'Specialty']
+                }
+            ],
+            'Pasta': [
+                {
+                    name: 'Spaghetti Bolognese',
+                    price: '$8.99',
+                    description: 'Classic spaghetti with our homemade meat sauce and parmesan cheese.',
+                    image: '/images/spaghetti.jpg',
+                    tags: ['Hot', 'Classic']
+                },
+                {
+                    name: 'Fettuccine Alfredo',
+                    price: '$9.99',
+                    description: 'Fettuccine pasta in a rich and creamy parmesan sauce.',
+                    image: '/images/fettuccine.jpg',
+                    tags: ['Hot', 'Creamy']
+                },
+                {
+                    name: 'Lasagna',
+                    price: '$10.99',
+                    description: 'Layers of pasta, meat sauce, and cheese baked to perfection.',
+                    image: '/images/lasagna.jpg',
+                    tags: ['Hot', 'Baked']
+                }
+            ],
+            'Sides': [
+                {
+                    name: 'Garlic Bread',
+                    price: '$3.99',
+                    description: 'Toasted bread with garlic butter and herbs.',
+                    image: '/images/garlic_bread.jpg',
+                    tags: ['Hot', 'Shareable']
+                },
+                {
+                    name: 'Caesar Salad',
+                    price: '$5.99',
+                    description: 'Fresh romaine lettuce with parmesan cheese, croutons, and Caesar dressing.',
+                    image: '/images/caesar_salad.jpg',
+                    tags: ['Cold', 'Healthy']
+                }
+            ]
+        },
+        'Subway': {
+            'Signature Sandwiches': [
+                {
+                    name: 'Italian B.M.T.',
+                    price: '$7.99',
+                    description: 'Pepperoni, salami, and ham with your choice of fresh vegetables and condiments.',
+                    image: '/images/italian_bmt.jpg',
+                    tags: ['Hot', 'Popular']
+                },
+                {
+                    name: 'Chicken Teriyaki',
+                    price: '$7.99',
+                    description: 'Tender chicken strips glazed with teriyaki sauce and topped with your favorite vegetables.',
+                    image: '/images/chicken_teriyaki.jpg',
+                    tags: ['Hot', 'Asian']
+                },
+                {
+                    name: 'Veggie Delite',
+                    price: '$6.99',
+                    description: 'Fresh vegetables and your choice of condiments on freshly baked bread.',
+                    image: '/images/veggie_delite.jpg',
+                    tags: ['Vegetarian', 'Healthy']
+                }
+            ],
+            'Sides': [
+                {
+                    name: 'Cookies',
+                    price: '$1.99',
+                    description: 'Freshly baked cookies in various flavors.',
+                    image: '/images/subway_cookies.jpg',
+                    tags: ['Sweet', 'Bakery']
+                },
+                {
+                    name: 'Chips',
+                    price: '$1.49',
+                    description: 'Assorted chips and snacks.',
+                    image: '/images/subway_chips.jpg',
+                    tags: ['Snack', 'Crispy']
+                }
+            ]
+        },
+        'Main Cafeteria-York': {
+            'Hot Entrees': [
+                {
+                    name: 'Chicken Stir Fry',
+                    price: '$8.99',
+                    description: 'Fresh vegetables and chicken in a savory sauce served with rice.',
+                    image: '/images/stir_fry.jpg',
+                    tags: ['Hot', 'Asian']
+                },
+                {
+                    name: 'Beef Stew',
+                    price: '$7.99',
+                    description: 'Tender beef and vegetables in a rich gravy, served with mashed potatoes.',
+                    image: '/images/beef_stew.jpg',
+                    tags: ['Hot', 'Comfort']
+                }
+            ],
+            'Salad Bar': [
+                {
+                    name: 'Build Your Own Salad',
+                    price: '$6.99',
+                    description: 'Fresh greens, vegetables, and toppings with your choice of dressing.',
+                    image: '/images/salad_bar.jpg',
+                    tags: ['Cold', 'Healthy']
+                }
+            ],
+            'Desserts': [
+                {
+                    name: 'Daily Special',
+                    price: '$3.99',
+                    description: 'Freshly baked dessert of the day.',
+                    image: '/images/dessert.jpg',
+                    tags: ['Sweet', 'Bakery']
+                }
+            ]
+        },
+        'Main Cafeteria-King': {
+            'Hot Entrees': [
+                {
+                    name: 'Roast Chicken',
+                    price: '$8.99',
+                    description: 'Herb-roasted chicken with seasonal vegetables and mashed potatoes.',
+                    image: '/images/roast_chicken.jpg',
+                    tags: ['Hot', 'Popular']
+                },
+                {
+                    name: 'Vegetable Curry',
+                    price: '$7.99',
+                    description: 'Mixed vegetables in a fragrant curry sauce, served with basmati rice.',
+                    image: '/images/veg_curry.jpg',
+                    tags: ['Hot', 'Vegetarian']
+                }
+            ],
+            'Sandwiches': [
+                {
+                    name: 'Club Sandwich',
+                    price: '$6.99',
+                    description: 'Triple-decker sandwich with turkey, bacon, lettuce, and tomato.',
+                    image: '/images/club_sandwich.jpg',
+                    tags: ['Cold', 'Classic']
+                }
+            ],
+            'Soups': [
+                {
+                    name: 'Soup of the Day',
+                    price: '$4.99',
+                    description: 'Freshly made soup served with a bread roll.',
+                    image: '/images/soup.jpg',
+                    tags: ['Hot', 'Comfort']
+                }
+            ]
+        },
+        'Starbucks Magna Hall': {
+            'Hot Coffee': [
+                {
+                    name: 'Pike Place® Roast',
+                    price: '$2.95',
+                    description: 'A smooth, well-rounded blend of Latin American coffees with subtle notes of cocoa and toasted nuts.',
+                    image: '/images/pike_place.jpg',
+                    tags: ['Signature', 'Medium Roast']
+                },
+                {
+                    name: 'Caffè Americano',
+                    price: '$3.25',
+                    description: 'Espresso shots topped with hot water to create a light layer of crema.',
+                    image: '/images/americano.jpg',
+                    tags: ['Espresso', 'Hot']
+                }
+            ],
+            'Cold Beverages': [
+                {
+                    name: 'Iced Coffee',
+                    price: '$3.25',
+                    description: 'Freshly brewed Starbucks® Iced Coffee Blend served chilled and sweetened over ice.',
+                    image: '/images/iced_coffee.jpg',
+                    tags: ['Cold', 'Classic']
+                },
+                {
+                    name: 'Strawberry Açaí Refresher',
+                    price: '$4.25',
+                    description: 'Sweet strawberry flavors accented by passion fruit and açaí notes.',
+                    image: '/images/strawberry_refresher.jpg',
+                    tags: ['Cold', 'Refreshing']
+                }
+            ],
+            'Breakfast': [
+                {
+                    name: 'Bacon & Gouda Sandwich',
+                    price: '$5.95',
+                    description: 'Applewood smoked bacon, aged Gouda, and egg on a croissant bun.',
+                    image: '/images/bacon_gouda.jpg',
+                    tags: ['Hot', 'Breakfast']
+                }
+            ]
+        },
+        'Salad+': {
+            'Signature Salads': [
+                {
+                    name: 'Cobb Salad',
+                    price: '$8.99',
+                    description: 'Fresh greens topped with grilled chicken, bacon, egg, avocado, and blue cheese.',
+                    image: '/images/cobb_salad.jpg',
+                    tags: ['Cold', 'Protein']
+                },
+                {
+                    name: 'Mediterranean Bowl',
+                    price: '$7.99',
+                    description: 'Quinoa, chickpeas, feta cheese, olives, and vegetables with lemon vinaigrette.',
+                    image: '/images/med_bowl.jpg',
+                    tags: ['Cold', 'Vegetarian']
+                }
+            ],
+            'Build Your Own': [
+                {
+                    name: 'Custom Salad',
+                    price: '$6.99',
+                    description: 'Choose your base, protein, toppings, and dressing.',
+                    image: '/images/custom_salad.jpg',
+                    tags: ['Customizable', 'Healthy']
+                }
+            ]
+        },
+        'International': {
+            'Asian Specialties': [
+                {
+                    name: 'Pad Thai',
+                    price: '$8.99',
+                    description: 'Stir-fried rice noodles with tofu, peanuts, and vegetables in a tangy sauce.',
+                    image: '/images/pad_thai.jpg',
+                    tags: ['Hot', 'Asian']
+                },
+                {
+                    name: 'Butter Chicken',
+                    price: '$7.99',
+                    description: 'Tender chicken in a rich, creamy tomato sauce served with rice and naan.',
+                    image: '/images/butter_chicken.jpg',
+                    tags: ['Hot', 'Indian']
+                }
+            ],
+            'Mexican Favorites': [
+                {
+                    name: 'Burrito Bowl',
+                    price: '$7.99',
+                    description: 'Rice, beans, protein, and toppings in a bowl with your choice of salsa.',
+                    image: '/images/burrito_bowl.jpg',
+                    tags: ['Hot', 'Mexican']
+                }
+            ]
+        },
+        'The Café': {
+            'Coffee & Tea': [
+                {
+                    name: 'Specialty Coffee',
+                    price: '$2.99',
+                    description: 'Freshly brewed coffee with your choice of flavor.',
+                    image: '/images/specialty_coffee.jpg',
+                    tags: ['Hot', 'Classic']
+                },
+                {
+                    name: 'Chai Latte',
+                    price: '$3.99',
+                    description: 'Spiced tea with steamed milk and honey.',
+                    image: '/images/chai_latte.jpg',
+                    tags: ['Hot', 'Spiced']
+                }
+            ],
+            'Pastries': [
+                {
+                    name: 'Assorted Muffins',
+                    price: '$2.99',
+                    description: 'Freshly baked muffins in various flavors.',
+                    image: '/images/muffins.jpg',
+                    tags: ['Bakery', 'Sweet']
+                }
+            ]
+        }
+    };
+
+    function showMenu(element) {
+        const place = element.getAttribute('data-place');
+        const modal = document.getElementById('menuModal');
+        const placeName = document.getElementById('placeName');
+        const menuContent = document.getElementById('menuContent');
+
+        placeName.textContent = `Menu for ${place}`;
+        menuContent.innerHTML = '';
+
+        const menu = menuData[place] || { 'No Menu Available': [{ 
+            name: 'Coming Soon',
+            description: 'Menu items are being updated. Please check back later.',
+            image: '/images/coming_soon.jpg'
+        }]};
+
+        for (const [category, items] of Object.entries(menu)) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'menu-category';
+            
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.textContent = category;
+            categoryDiv.appendChild(categoryTitle);
+
+            const itemsList = document.createElement('div');
+            itemsList.className = 'menu-items';
+            
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'menu-item';
+
+                const image = document.createElement('img');
+                image.className = 'menu-item-image';
+                image.src = item.image;
+                image.alt = item.name;
+                image.onerror = function() {
+                    this.src = '/images/default_food.jpg';
+                };
+
+                const details = document.createElement('div');
+                details.className = 'menu-item-details';
+
+                const header = document.createElement('div');
+                header.className = 'menu-item-header';
+
+                const name = document.createElement('h4');
+                name.className = 'menu-item-name';
+                name.textContent = item.name;
+
+                const price = document.createElement('span');
+                price.className = 'menu-item-price';
+                price.textContent = item.price;
+
+                header.appendChild(name);
+                header.appendChild(price);
+
+                const description = document.createElement('p');
+                description.className = 'menu-item-description';
+                description.textContent = item.description;
+
+                details.appendChild(header);
+                details.appendChild(description);
+
+                if (item.tags) {
+                    const tags = document.createElement('div');
+                    tags.className = 'menu-item-tags';
+                    item.tags.forEach(tag => {
+                        const tagSpan = document.createElement('span');
+                        tagSpan.className = 'menu-item-tag';
+                        tagSpan.textContent = tag;
+                        tags.appendChild(tagSpan);
+                    });
+                    details.appendChild(tags);
+                }
+
+                itemDiv.appendChild(image);
+                itemDiv.appendChild(details);
+                itemsList.appendChild(itemDiv);
+            });
+
+            categoryDiv.appendChild(itemsList);
+            menuContent.appendChild(categoryDiv);
+        }
+
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('menuModal');
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('menuModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
