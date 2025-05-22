@@ -90,9 +90,11 @@ src/
 
 ## 🔑 Login Credentials
 
-For demo purposes, use the following credentials:
-- Email: demo@senecaeats.com
-- Password: demo123
+## 🔑 Demo Credentials
+
+For testing purposes, use the following credentials:
+- Email: fl.ln@myseneca.ca
+- Password: flln 
 
 ## 🎨 UI/UX Features
 
