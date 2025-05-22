@@ -292,17 +292,21 @@
         }
 
         .login-container {
-            max-width: 500px;
-            width: 90%;
-            margin: 40px auto 0 auto;
+            max-width: 100%;
+            width: 100%;
+            margin: 0;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(145deg, #ffffff, #fff8f8);
+            border-radius: 0;
+            box-shadow: none;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(5px);
-            transform: translateY(-20px);
+            border: none;
+            box-sizing: border-box;
+            min-height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .login-container::before {
@@ -313,14 +317,49 @@
             right: 0;
             bottom: 0;
             background: url('/images/seneca-eats.jpg') center/cover;
-            border-radius: 15px;
-            z-index: -1;
             opacity: 0.1;
-            filter: blur(2px);
+            z-index: -1;
+        }
+
+        .login-content {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 30, 30, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .login-content h5 {
+            color: #DA291C;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            width: 100%;
         }
 
         .form-group label {
@@ -328,83 +367,151 @@
             margin-bottom: 0.5rem;
             color: #333;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid rgba(30, 30, 30, 0.2);
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
         }
 
         .form-group input:focus {
             border-color: #DA291C;
             outline: none;
             box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .login-button {
             width: 100%;
             padding: 1rem;
-            background-color: #DA291C;
+            background: linear-gradient(145deg, #DA291C, #b51e17);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(218, 41, 28, 0.2);
         }
 
         .login-button:hover {
-            background-color: #b51e17;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(218, 41, 28, 0.2);
+            box-shadow: 0 6px 15px rgba(218, 41, 28, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            background: linear-gradient(145deg, #fff3f3, #fff8f8);
+            color: #DA291C;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid rgba(218, 41, 28, 0.2);
+            box-shadow: 0 2px 8px rgba(218, 41, 28, 0.1);
         }
 
         .login-links {
             text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e0e0e0;
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(30, 30, 30, 0.1);
         }
 
         .login-links a {
             color: #DA291C;
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             display: inline-block;
-            margin: 0 1rem;
+            margin: 0 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
         }
 
         .login-links a:hover {
-            color: #b51e17;
-            text-decoration: underline;
-        }
-
-        .error-message {
-            background-color: #fff3f3;
-            color: #DA291C;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: 500;
-            border: 1px solid rgba(218, 41, 28, 0.2);
+            background: rgba(218, 41, 28, 0.1);
+            transform: translateY(-1px);
         }
 
         @media (max-width: 768px) {
             .login-container {
-                margin: 1rem;
-                padding: 2rem;
+                padding: 1rem;
+            }
+            
+            .login-content {
+                padding: 1.2rem;
+                margin: 0 1rem;
+            }
+            
+            .login-content h5 {
+                font-size: 1.8rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .welcome-message {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+                padding: 0 1rem;
             }
         }
+
+        .help-section {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(30, 30, 30, 0.1);
+            text-align: center;
+        }
+
+        .help-section h4 {
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .help-section p {
+            color: #666;
+            margin: 0.4rem 0;
+            font-size: 0.9rem;
+        }
+
+        .help-section a {
+            color: #DA291C;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .help-section a:hover {
+            color: #b51e17;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -433,29 +540,50 @@
 
 <div class="login-container">
     <div class="login-content">
-        <h5 style="color: #DA291C; text-align: center; font-size: 2.2rem; font-weight: bold; margin: -10px; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">LOG IN</h5>
+        <h5>Welcome to Seneca Eats</h5>
+        <div class="welcome-message">
+            <p>Experience the finest campus dining at Seneca Polytechnic. Log in to access exclusive features and manage your dining experience.</p>
+        </div>
+
         <form th:action="@{/login}" method="post">
-            <label>Name:</label>
-            <input type="text" name="name" required placeholder="Enter your name">
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" name="name" required placeholder="Enter your name">
+            </div>
             
-            <label>Email:</label>
-            <input type="email" name="email" required placeholder="Enter your email">
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required placeholder="Enter your email">
+            </div>
             
-            <label>Password:</label>
-            <input type="password" name="password" required placeholder="Enter your password">
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" name="password" required placeholder="Enter your password">
+            </div>
             
-            <button type="submit">Sign In</button>
+            <button type="submit" class="login-button">Sign In</button>
 
             <div th:if="${error}" class="error-message">
                 <p th:text="${error}"></p>
             </div>
         </form>
+
+        <div class="login-links">
+            <a href="/forgot-password">Forgot Password?</a>
+            <a href="/register">Create Account</a>
+        </div>
+
+        <div class="help-section">
+            <h4>Need Help?</h4>
+            <p>Contact our support team at <a href="mailto:support@senecaeats.ca">support@senecaeats.ca</a></p>
+            <p>Or visit our <a href="/faq">FAQ page</a> for quick answers</p>
+        </div>
     </div>
 </div>
 
 <!-- Footer -->
-<footer style="position: relative; background: #444 url('/static/images/Seneca-Food%20Hall.jpg') center/cover no-repeat; color: white; margin-top: 60px; font-family: Arial, sans-serif;">
-    <div style="position: absolute; inset: 0; background: rgba(40,40,40,0.75); z-index: 0;"></div>
+<footer style="position: relative; background: #333; color: white; margin-top: 60px; font-family: Arial, sans-serif;">
+    <div style="position: absolute; inset: 0; background: rgba(40,40,40,0.95); z-index: 0;"></div>
     <div style="position: relative; max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: stretch; gap: 40px; padding: 60px 30px 30px 30px; z-index: 1;">
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Seneca Eats</h3>
