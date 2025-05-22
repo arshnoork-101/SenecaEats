@@ -1,111 +1,159 @@
-# 🍽️ Seneca Eats – Cafeteria Web App
+# 🍽️ SenecaEats - Campus Food Service Platform
 
-Welcome to **Seneca Eats** – a smart and responsive web platform that helps **students and staff at Seneca College** effortlessly browse menus, check cafeteria hours, and navigate food services across multiple campuses.
+<div align="center">
+
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
 > Built with 💻 Java + Spring Boot | Styled for 📱 mobile-first experiences | Designed to make campus life tastier 😋
 
----
+</div>
 
-### 🎯 Problem Statement
-- Difficulty in finding food services across multiple campuses
-- Lack of centralized menu information
-- Inconsistent operating hours access
-- Poor mobile experience for on-the-go students
+## 📋 Table of Contents
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Demo Credentials](#-demo-credentials)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-### 💡 Solution
-- Centralized platform for all campus food services
-- Real-time menu and hours information
-- Mobile-first responsive design
-- User-friendly interface
+## 🌟 Overview
 
-## 🚀 Tech Stack
+SenecaEats is a modern, user-friendly platform designed to revolutionize how students and staff at Seneca College interact with campus food services. Our platform brings together all campus cafeterias, food courts, and dining options into one seamless experience.
 
-### 🔙 Backend
-- ⚙️ **Java 17** – Core language
-- 🚀 **Spring Boot 3.5.0** – Backend framework
-- 🌐 **Spring MVC** – RESTful web layer
-- 🧰 **SLF4J** – Logging
-- 📦 **Maven** – Build and dependency management
+### 🎯 Key Benefits
+- 📱 **Mobile-First Design**: Access menus and place orders on any device
+- 🕒 **Real-Time Updates**: Get instant notifications about menu changes and special offers
+- 🎨 **Intuitive Interface**: Clean, modern design that's easy to navigate
+- 🔒 **Secure Authentication**: Safe and reliable user authentication system
 
-### 🎨 Frontend
-- 🧩 **Thymeleaf** – Server-side rendering engine
-- 🖼️ **HTML5**, **CSS3**, **JavaScript** – UI design
-- 📱 **Responsive Design** – Mobile-first UI/UX
+## ✨ Features
 
----
+### 🍔 Food Service Management
+- Comprehensive menu management system
+- Real-time order processing
+- Special dietary requirement indicators
+- Daily specials and promotions
 
-## 🛠️ Features
+### 👤 User Experience
+- Personalized user profiles
+- Order history tracking
+- Favorite items list
+- Customizable preferences
 
-- 🌐 **Campus Selection**: Choose between Newnham, York, and King
-- 📋 **Menu Display**: View detailed menus per cafeteria
-- 🕒 **Operating Hours**: Display real-time hours of operation
-- 🔐 **User Authentication**: Secure login functionality
-- 📱 **Responsive UI**: Works seamlessly across devices
+### 🔒 Security
+- Secure user authentication
+- Role-based access control
+- Data encryption
+- Session management
 
----
+## 🛠️ Tech Stack
 
-## 🔧 Installation
+### Backend
+- **Java 17**: Core programming language
+- **Spring Boot 3.2.3**: Application framework
+- **Spring Data JPA**: Data persistence
+- **H2 Database**: Development database
+- **Maven**: Build automation
+
+### Frontend
+- **Thymeleaf**: Server-side templating
+- **Bootstrap**: Responsive design
+- **JavaScript**: Dynamic interactions
+- **CSS3**: Modern styling
+
+### DevOps
+- **Git**: Version control
+- **GitHub**: Code repository
+- **Maven**: Dependency management
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Java 17 or higher
+- Maven
+- Git
+
+### Installation Steps
 
 1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/arshnoork-31/SenecaEats.git
-   cd cafeteriaapp
-   ```
+```bash
+git clone https://github.com/arshnoork-101/SenecaEats.git
+cd SenecaEats
+```
 
-2. **IDE Setup**
-   - Open project in IntelliJ IDEA
-   - Enable auto-import for Maven
-   - Configure Java 17 SDK
+2. **Configure Environment**
+   - Create `application.properties` in `src/main/resources/`
+   - Add your Cloudinary credentials:
+   ```properties
+   cloudinary.cloud-name=your_cloud_name
+   cloudinary.api-key=your_api_key
+   cloudinary.api-secret=your_api_secret
+   ```
 
 3. **Build and Run**
-   ```bash
-   ./mvnw clean install
-   ./mvnw spring-boot:run
-   ```
+```bash
+mvn clean install
+mvn spring-boot:run
+```
 
 4. **Access the Application**
-   - Open browser
+   - Open your browser
    - Navigate to `http://localhost:8080`
-
-### ⚙️ Troubleshooting
-
-- **Port Conflict**: Change port in `application.properties`: `server.port=8081`
-- **Build Issues**: Run `./mvnw clean install -U` to force update dependencies
-- **Java Version**: Ensure Java 17 is installed: `java -version`
-
-## 📁 Project Structure
-
-```
-src/
-├── main/
-│   ├── java/
-│   │   └── com/seneca/cafeteria/cafeteriaapp/
-│   │       ├── controllers/    # MVC Controllers
-│   │       └── models/         # Data Models
-│   └── resources/
-│       ├── static/            # Static assets
-│       └── templates/         # Thymeleaf templates
-└── test/                      # Unit tests
-```
-
-## 🔑 Login Credentials
 
 ## 🔑 Demo Credentials
 
 For testing purposes, use the following credentials:
 - Email: fl.ln@myseneca.ca
-- Password: flln 
+- Password: flln
 
-## 🎨 UI/UX Features
+## 📁 Project Structure
 
-- **Responsive Navigation**: Adapts to all screen sizes
-- **Mobile-First Design**: Optimized for mobile devices
-- **Clean Interface**: Intuitive and user-friendly
-- **Smooth Animations**: Enhanced user experience
-- **Consistent Theme**: Consistent color scheme
+```
+src/main/java/com/seneca/cafeteria/cafeteriaapp/
+├── controllers/    # REST controllers
+├── models/        # Entity classes
+├── repositories/  # Data access layer
+├── services/      # Business logic
+└── CafeteriaappApplication.java  # Main application class
+```
 
 ## 🤝 Contributing
 
-Fork the repo, create a feature branch, commit your changes, push, and open a Pull Request.
+We welcome contributions! Here's how you can help:
 
-Thank You! 👋 
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### 📝 Pull Request Process
+1. Update the README.md with details of changes
+2. Update the documentation
+3. Ensure all tests pass
+4. Follow the existing code style
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Authors
+
+- **Arsh Noor** - *Initial work* - [GitHub Profile](https://github.com/arshnoork-101)
+
+## 🙏 Acknowledgments
+
+- Seneca College for inspiration and support
+- Spring Boot Team for the amazing framework
+- All contributors who have helped shape this project
+
+---
+
+<div align="center">
+Made with ❤️ for Seneca College
+</div> 
