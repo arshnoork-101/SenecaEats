@@ -2,6 +2,16 @@
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 
+</div>
+
+## 🌟 Overview
+SenecaEats is a modern, user-friendly platform 
+designed to revolutionize how students and staff at 
+Seneca College interact with campus food services. Our 
+platform brings together all campus cafeterias, food 
+courts, and dining options into one seamless 
+experience.
+
 > Built with 💻 Java + Spring Boot | Styled for 📱 mobile-first experiences | Designed to make campus life tastier 😋
 
 ## 🎯 Key Benefits
@@ -15,7 +25,6 @@
 - Food menu management
 - Order processing
 - User authentication and authorization
-- Image upload and management using Cloudinary
 - Responsive web interface using Thymeleaf
 - Database persistence with JPA/Hibernate
 
@@ -37,7 +46,6 @@
 
 - Java 17 or higher
 - Maven
-- Cloudinary account (for image upload functionality)
 
 ## 🚀 Getting Started
 
@@ -47,21 +55,12 @@ git clone https://github.com/arshnoork-101/SenecaEats.git
 cd SenecaEats
 ```
 
-2. Configure Cloudinary:
-   - Create a `application.properties` file in `src/main/resources/`
-   - Add your Cloudinary credentials:
-   ```properties
-   cloudinary.cloud-name=your_cloud_name
-   cloudinary.api-key=your_api_key
-   cloudinary.api-secret=your_api_secret
-   ```
-
-3. Build the project:
+2. Build the project:
 ```bash
 mvn clean install
 ```
 
-4. Run the application:
+3. Run the application:
 ```bash
 mvn spring-boot:run
 ```
@@ -85,14 +84,6 @@ src/main/java/com/seneca/cafeteria/cafeteriaapp/
 └── CafeteriaappApplication.java  # Main application class
 ```
 
-## 🔧 Configuration
-
-The application uses the following key configurations:
-- H2 Database for development
-- Thymeleaf for templating
-- Spring Security for authentication
-- Cloudinary for image management
-
 ## 🤝 Contributing
 
 We welcome contributions! Here's how you can help:
@@ -103,19 +94,6 @@ We welcome contributions! Here's how you can help:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👥 Authors
-
-- Arsh Noor - Initial work
-
-## 🙏 Acknowledgments
-
-- Seneca College
-- Spring Boot Team
-- Cloudinary
 
 ---
 
