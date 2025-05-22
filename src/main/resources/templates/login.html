@@ -292,19 +292,117 @@
         }
 
         .login-container {
+            max-width: 500px;
+            width: 90%;
+            margin: 40px auto 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             position: relative;
-            padding: 1rem;
-            background: #f8f9fa;
-            min-height: calc(100vh - 400px);
+            z-index: 1;
+            backdrop-filter: blur(5px);
+            transform: translateY(-20px);
         }
 
         .login-container::before {
-            display: none;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/images/Seneca-Eats.jpg') center/cover;
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.1;
+            filter: blur(2px);
         }
 
-        .login-content {
-            position: relative;
-            z-index: 1;
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #DA291C;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.1);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #DA291C;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .login-button:hover {
+            background-color: #b51e17;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(218, 41, 28, 0.2);
+        }
+
+        .login-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .login-links a {
+            color: #DA291C;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+
+        .login-links a:hover {
+            color: #b51e17;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: #fff3f3;
+            color: #DA291C;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid rgba(218, 41, 28, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
         }
     </style>
 </head>
@@ -316,7 +414,8 @@
         <li><a href="/">HOME</a></li>
         <li><a href="/about">ABOUT</a></li>
         <li><a href="/contact">CONTACT US</a></li>
-        <li><a href="/login">LOGIN</a></li>
+        <li th:if="${session.isLoggedIn}"><a href="/logout">LOGOUT</a></li>
+        <li th:unless="${session.isLoggedIn}"><a href="/login">LOGIN</a></li>
     </ul>
     <button class="toggle-button" onclick="toggleNavbar()">☰</button>
 </nav>
@@ -327,13 +426,14 @@
         <li><a href="/">HOME</a></li>
         <li><a href="/about">ABOUT</a></li>
         <li><a href="/contact">Contact Us</a></li>
-        <li><a href="/login">LOGIN</a></li>
+        <li th:if="${session.isLoggedIn}"><a href="/logout">LOGOUT</a></li>
+        <li th:unless="${session.isLoggedIn}"><a href="/login">LOGIN</a></li>
     </ul>
 </div>
 
 <div class="login-container">
     <div class="login-content">
-
+        <h5 style="color: #DA291C; text-align: center; font-size: 2.2rem; font-weight: bold; margin: -10px; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">LOG IN</h5>
         <form th:action="@{/login}" method="post">
             <label>Name:</label>
             <input type="text" name="name" required placeholder="Enter your name">
@@ -353,24 +453,6 @@
     </div>
 </div>
 
-<script>
-    function toggleNavbar() {
-        const overlay = document.getElementById('mobileMenu');
-        overlay.classList.toggle('show');
-    }
-
-    document.addEventListener('click', function(event) {
-        const overlay = document.getElementById('mobileMenu');
-        const toggleButton = document.querySelector('.toggle-button');
-        const isClickInsideMenu = overlay.contains(event.target);
-        const isClickOnButton = toggleButton.contains(event.target);
-
-        if (overlay.classList.contains('show') && !isClickInsideMenu && !isClickOnButton) {
-            overlay.classList.remove('show');
-        }
-    });
-</script>
-
 <!-- Footer -->
 <footer style="position: relative; background: #444 url('/static/images/Seneca-Food%20Hall.jpg') center/cover no-repeat; color: white; margin-top: 60px; font-family: Arial, sans-serif;">
     <div style="position: absolute; inset: 0; background: rgba(40,40,40,0.75); z-index: 0;"></div>
@@ -378,7 +460,7 @@
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Seneca Eats</h3>
             <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                <li style="margin-bottom: 8px;"><strong style="color: #DA291C;">Locations:</strong></li>
+                <li style="margin-bottom: 8px;"><strong style="color: #fff;">Locations:</strong></li>
                 <li>Newnham Campus</li>
                 <li>Seneca@York Campus</li>
                 <li>King Campus</li>
@@ -387,16 +469,16 @@
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Hours</h3>
             <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                <li><strong style="color: #DA291C;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
-                <li><strong style="color: #DA291C;">Weekends:</strong> Varies by location</li>
+                <li><strong style="color: #fff;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
+                <li><strong style="color: #fff;">Weekends:</strong> Varies by location</li>
             </ul>
         </div>
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Contact</h3>
             <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                <li><strong style="color: #DA291C;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
-                <li><strong style="color: #DA291C;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
-                <li><strong style="color: #DA291C;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
+                <li><strong style="color: #fff;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
+                <li><strong style="color: #fff;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
+                <li><strong style="color: #fff;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
             </ul>
         </div>
         <div style="flex: 1 1 250px; min-width: 250px;">
@@ -415,6 +497,24 @@
         <a href="/privacy" style="color: rgba(255,255,255,0.8); margin-left: 20px; text-decoration: none; font-size: 0.9rem; transition: color 0.3s;">Privacy Notice</a>
     </div>
 </footer>
+
+<script>
+    function toggleNavbar() {
+        const overlay = document.getElementById('mobileMenu');
+        overlay.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(event) {
+        const overlay = document.getElementById('mobileMenu');
+        const toggleButton = document.querySelector('.toggle-button');
+        const isClickInsideMenu = overlay.contains(event.target);
+        const isClickOnButton = toggleButton.contains(event.target);
+
+        if (overlay.classList.contains('show') && !isClickInsideMenu && !isClickOnButton) {
+            overlay.classList.remove('show');
+        }
+    });
+</script>
 
 </body>
 </html>

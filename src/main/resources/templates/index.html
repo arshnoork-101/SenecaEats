@@ -140,7 +140,7 @@
 
         @media (max-width: 768px) {
             .toggle-button {
-                display: block;
+            display: block;
                 margin-left: auto;
             }
 
@@ -281,17 +281,52 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .campus-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
 
         .campus-card img {
             width: 100%;
-            aspect-ratio: 16 / 9; /* Keeps aspect ratio consistent */
+            height: 180px;
             object-fit: cover;
             border-radius: 8px;
+            margin-bottom: 15px;
         }
-        h1{
-            margin-bottom: 20px;
-            margin-top: 40px;
+
+        .campus-card h3 {
+            color: #DA291C;
+            font-size: 1.4rem;
+            margin: 15px 0;
+        }
+
+        .campus-card p {
+            color: #666;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .campus-card p strong {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-section {
+                margin: 1.5rem;
+                padding: 1rem;
+            }
+
+            .campus-card {
+                width: 280px;
+                padding: 20px;
+            }
+
+            .campus-card img {
+                height: 160px;
+            }
         }
 
         .welcome-section {
@@ -319,7 +354,7 @@
         .campus-section {
             margin-top: 1rem;
             padding: 0 1rem;
-            min-height: calc(100vh - 400px); /* Ensure minimum height to push footer down */
+            min-height: calc(100vh - 400px);
         }
 
         .campus-section h1 {
@@ -410,7 +445,6 @@
                 height: 160px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -455,7 +489,7 @@
         </div>
 
         <div class="campus-card" onclick="goToMenu('York')">
-            <img src="/images/seneca-york.jpeg" alt="York Campus" />
+            <img src="/images/seneca-york.jpg" alt="York Campus" />
             <h3>Seneca@York Campus</h3>
             <p><strong>Location:</strong> 70 The Pond Rd</p>
             <p><strong>Open Hours (Mon–Sat):</strong><br>8:30 AM – 7:30 PM</p>
@@ -499,7 +533,7 @@
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Seneca Eats</h3>
             <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                <li style="margin-bottom: 8px;"><strong style="color: #DA291C;">Locations:</strong></li>
+                <li style="margin-bottom: 8px;"><strong style="color: #fff;">Locations:</strong></li>
                 <li>Newnham Campus</li>
                 <li>Seneca@York Campus</li>
                 <li>King Campus</li>
@@ -508,16 +542,16 @@
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Hours</h3>
             <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                <li><strong style="color: #DA291C;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
-                <li><strong style="color: #DA291C;">Weekends:</strong> Varies by location</li>
+                <li><strong style="color: #fff;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
+                <li><strong style="color: #fff;">Weekends:</strong> Varies by location</li>
             </ul>
         </div>
         <div style="flex: 1 1 250px; min-width: 250px;">
             <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Contact</h3>
             <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                <li><strong style="color: #DA291C;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
-                <li><strong style="color: #DA291C;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
-                <li><strong style="color: #DA291C;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
+                <li><strong style="color: #fff;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
+                <li><strong style="color: #fff;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
+                <li><strong style="color: #fff;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
             </ul>
         </div>
         <div style="flex: 1 1 250px; min-width: 250px;">
@@ -538,4 +572,4 @@
 </footer>
 
 </body>
-</html>
+</html> 

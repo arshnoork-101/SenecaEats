@@ -79,13 +79,19 @@
 
         .image-container {
             position: relative;
+            background-color: white;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .image-container img {
             width: 100%;
-            height: 160px;
+            height: 100%;
             object-fit: contain;
-            background-color: transparent;
+            background-color: white;
+            padding: 10px;
         }
 
         .overlay {
@@ -274,7 +280,8 @@
 <div class="container">
     <div th:each="place : ${places}" class="card" onclick="showMenu(this)" th:data-place="${place.name}">
         <div class="image-container">
-            <img th:src="@{'/images/' + ${place.name.toLowerCase()} + '.png'}" th:alt="${place.name}">
+            <img th:src="@{'/images/' + ${placeImageMap.get(place.name)}}" 
+                 th:alt="${place.name}">
             <div class="overlay">View Menu</div>
         </div>
         <div class="card-body">
@@ -298,6 +305,24 @@
         <div id="menuContent"></div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    // Map place names to their exact image file names
+    const placeImageMap = {
+        'Tim Hortons': 'timhortons.jpg',
+        'Starbucks': 'starbucks.jpg',
+        'Subway': 'subway.jpg',
+        'The Market': 'the_market.jpg',
+        'Grill': 'grill.png',
+        'Pizza+Pasta': 'pizza+pasta.png',
+        'Salad+': 'salad+.jpg',
+        'International': 'international.png',
+        'The Café': 'the_cafe.png',
+        'Main Cafeteria-York': 'main_cafeteria-york.png',
+        'Main Cafeteria-King': 'main_cafeteria-king.png',
+        'Starbucks Magna Hall': 'starbucks_magna_hall.png'
+    };
+</script>
 
 <script>
     // Hardcoded menu data with images and descriptions
@@ -342,10 +367,33 @@
                     tags: ['Cold', 'Strong']
                 }
             ],
-            'Hot Tea': ['Chai Tea', 'Earl Grey', 'Jade Citrus Mint®'],
-            'Cold Tea': ['Iced Green Tea', 'Iced Black Tea', 'Iced Passion Tango®'],
-            'Refreshers': ['Strawberry Açaí', 'Mango Dragonfruit', 'Pineapple Passionfruit'],
-            'Frappuccino': ['Caramel Frappuccino®', 'Mocha Frappuccino®', 'Java Chip Frappuccino®'],
+            'Hot Tea': [
+                {
+                    name: 'Chai Tea',
+                    price: '$3.25',
+                    description: 'Black tea infused with cinnamon, clove and other warming spices.',
+                    image: '/images/hot_tea.jpg',
+                    tags: ['Hot', 'Spiced']
+                }
+            ],
+            'Cold Tea': [
+                {
+                    name: 'Iced Green Tea',
+                    price: '$3.25',
+                    description: 'Refreshing green tea served over ice.',
+                    image: '/images/cold_tea.jpg',
+                    tags: ['Cold', 'Refreshing']
+                }
+            ],
+            'Frappuccino': [
+                {
+                    name: 'Caramel Frappuccino',
+                    price: '$4.95',
+                    description: 'Coffee, milk and caramel blended with ice, topped with whipped cream and caramel drizzle.',
+                    image: '/images/Frappuccino_Blended_Beverage.jpg',
+                    tags: ['Cold', 'Sweet']
+                }
+            ],
             'Breakfast': [
                 {
                     name: 'Bacon & Gouda Sandwich',
@@ -362,27 +410,63 @@
                     tags: ['Vegetarian', 'Breakfast']
                 }
             ],
-            'Bakery': ['Butter Croissant', 'Bagel with Cream Cheese', 'Banana Bread'],
-            'Treats': ['Cake Pop', 'Chocolate Chip Cookie', 'Brownie'],
-            'Lunch': ['Turkey Panini', 'Protein Box', 'Chicken Wrap'],
-            'Snacks': ['String Cheese', 'Granola Bar', 'Chips']
+            'Bakery': [
+                {
+                    name: 'Assorted Muffins',
+                    price: '$2.99',
+                    description: 'Freshly baked muffins in various flavors.',
+                    image: '/images/bakery.jpg',
+                    tags: ['Bakery', 'Sweet']
+                }
+            ],
+            'Treats': [
+                {
+                    name: 'Chocolate Chip Cookie',
+                    price: '$2.25',
+                    description: 'Classic chocolate chip cookie.',
+                    image: '/images/treats.jpg',
+                    tags: ['Sweet', 'Classic']
+                }
+            ],
+            'Lunch': [
+                {
+                    name: 'Turkey Panini',
+                    price: '$6.95',
+                    description: 'Sliced turkey, cheese, and vegetables pressed in our signature bread.',
+                    image: '/images/lunch.jpg',
+                    tags: ['Hot', 'Sandwich']
+                }
+            ],
+            'Snacks': [
+                {
+                    name: 'Mixed Nuts',
+                    price: '$3.95',
+                    description: 'A blend of premium nuts.',
+                    image: '/images/snacks.jpg',
+                    tags: ['Healthy', 'Snack']
+                }
+            ]
         },
         'Tim Hortons': {
-            'Popular Items': [
+            'Hot Coffee': [
+                {
+                    name: 'Original Blend Coffee',
+                    price: '$2.25',
+                    description: 'Our signature blend of 100% Arabica beans.',
+                    image: '/images/hot_coffee.jpg',
+                    tags: ['Hot', 'Classic']
+                }
+            ],
+            'Cold Beverages': [
                 {
                     name: 'Iced Capp',
                     price: '$3.99',
                     description: 'A refreshing blend of coffee, cream, and ice.',
                     image: '/images/iced_capp.jpg',
                     tags: ['Cold', 'Signature']
-                },
-                {
-                    name: 'Timbits',
-                    price: '$0.50 each',
-                    description: 'Bite-sized donut holes available in various flavors.',
-                    image: '/images/timbits.jpg',
-                    tags: ['Snack', 'Sweet']
-                },
+                }
+            ],
+            'Breakfast': [
                 {
                     name: 'Bagel with Cream Cheese',
                     price: '$2.99',
@@ -390,23 +474,43 @@
                     image: '/images/bagel.jpg',
                     tags: ['Breakfast', 'Classic']
                 }
+            ],
+            'Snacks': [
+                {
+                    name: 'Timbits',
+                    price: '$0.50 each',
+                    description: 'Bite-sized donut holes available in various flavors.',
+                    image: '/images/timbits.jpg',
+                    tags: ['Snack', 'Sweet']
+                }
             ]
         },
         'The Market': {
-            'Popular Items': [
+            'Pizza': [
                 {
                     name: 'Margherita Pizza',
                     price: '$6.99',
                     description: 'Fresh mozzarella, tomatoes, and basil on our signature crust.',
                     image: '/images/margherita.jpg',
                     tags: ['Hot', 'Vegetarian']
-                },
+                }
+            ],
+            'Salads': [
                 {
                     name: 'Caesar Salad',
                     price: '$5.99',
                     description: 'Crisp romaine lettuce, parmesan cheese, croutons, and Caesar dressing.',
                     image: '/images/caesar.jpg',
                     tags: ['Cold', 'Healthy']
+                }
+            ],
+            'Snacks': [
+                {
+                    name: 'Fresh Fruit',
+                    price: '$3.99',
+                    description: 'Seasonal fresh fruit selection.',
+                    image: '/images/snacks.jpg',
+                    tags: ['Healthy', 'Fresh']
                 }
             ]
         },
@@ -416,7 +520,7 @@
                     name: 'Classic Cheeseburger',
                     price: '$7.99',
                     description: 'Juicy beef patty with melted cheddar cheese, fresh lettuce, tomatoes, and special sauce on a toasted brioche bun.',
-                    image: '/images/cheeseburger.jpg',
+                    image: '/images/classic_cheeseburger.jpg',
                     tags: ['Hot', 'Popular']
                 },
                 {
@@ -471,14 +575,14 @@
                     name: 'Pepperoni Pizza',
                     price: '$10.99',
                     description: 'Loaded with pepperoni and mozzarella cheese on our signature crust.',
-                    image: '/images/pepperoni_pizza.jpg',
+                    image: '/images/pepporoni_pizza.jpg',
                     tags: ['Hot', 'Popular']
                 },
                 {
                     name: 'BBQ Chicken Pizza',
                     price: '$11.99',
                     description: 'Grilled chicken, red onions, and BBQ sauce on our signature crust.',
-                    image: '/images/bbq_chicken_pizza.jpg',
+                    image: '/images/bbq-chicken-pizza.jpg',
                     tags: ['Hot', 'Specialty']
                 }
             ],
@@ -487,21 +591,21 @@
                     name: 'Spaghetti Bolognese',
                     price: '$8.99',
                     description: 'Classic spaghetti with our homemade meat sauce and parmesan cheese.',
-                    image: '/images/spaghetti.jpg',
+                    image: '/images/spaghetti-bolognese.jpg',
                     tags: ['Hot', 'Classic']
                 },
                 {
                     name: 'Fettuccine Alfredo',
                     price: '$9.99',
                     description: 'Fettuccine pasta in a rich and creamy parmesan sauce.',
-                    image: '/images/fettuccine.jpg',
+                    image: '/images/shrimp-fettuccine-alfredo.jpg',
                     tags: ['Hot', 'Creamy']
                 },
                 {
                     name: 'Lasagna',
                     price: '$10.99',
                     description: 'Layers of pasta, meat sauce, and cheese baked to perfection.',
-                    image: '/images/lasagna.jpg',
+                    image: '/images/Lasagna.jpg',
                     tags: ['Hot', 'Baked']
                 }
             ],
@@ -510,14 +614,14 @@
                     name: 'Garlic Bread',
                     price: '$3.99',
                     description: 'Toasted bread with garlic butter and herbs.',
-                    image: '/images/garlic_bread.jpg',
+                    image: '/images/Garlic-Bread.jpg',
                     tags: ['Hot', 'Shareable']
                 },
                 {
                     name: 'Caesar Salad',
                     price: '$5.99',
                     description: 'Fresh romaine lettuce with parmesan cheese, croutons, and Caesar dressing.',
-                    image: '/images/caesar_salad.jpg',
+                    image: '/images/caesar.jpg',
                     tags: ['Cold', 'Healthy']
                 }
             ]
@@ -551,14 +655,14 @@
                     name: 'Cookies',
                     price: '$1.99',
                     description: 'Freshly baked cookies in various flavors.',
-                    image: '/images/subway_cookies.jpg',
+                    image: '/images/cookies.jpg',
                     tags: ['Sweet', 'Bakery']
                 },
                 {
                     name: 'Chips',
                     price: '$1.49',
                     description: 'Assorted chips and snacks.',
-                    image: '/images/subway_chips.jpg',
+                    image: '/images/chips.jpg',
                     tags: ['Snack', 'Crispy']
                 }
             ]
@@ -569,7 +673,7 @@
                     name: 'Chicken Stir Fry',
                     price: '$8.99',
                     description: 'Fresh vegetables and chicken in a savory sauce served with rice.',
-                    image: '/images/stir_fry.jpg',
+                    image: '/images/Chicken-Stir-Fry.jpg',
                     tags: ['Hot', 'Asian']
                 },
                 {
@@ -578,6 +682,13 @@
                     description: 'Tender beef and vegetables in a rich gravy, served with mashed potatoes.',
                     image: '/images/beef_stew.jpg',
                     tags: ['Hot', 'Comfort']
+                },
+                {
+                    name: 'Grilled Salmon',
+                    price: '$9.99',
+                    description: 'Fresh salmon fillet with lemon herb butter, served with seasonal vegetables.',
+                    image: '/images/grilled-salmon.jpg',
+                    tags: ['Hot', 'Healthy']
                 }
             ],
             'Salad Bar': [
@@ -585,8 +696,15 @@
                     name: 'Build Your Own Salad',
                     price: '$6.99',
                     description: 'Fresh greens, vegetables, and toppings with your choice of dressing.',
-                    image: '/images/salad_bar.jpg',
+                    image: '/images/build_salad.jpg',
                     tags: ['Cold', 'Healthy']
+                },
+                {
+                    name: 'Caesar Salad',
+                    price: '$5.99',
+                    description: 'Crisp romaine lettuce, parmesan cheese, croutons, and Caesar dressing.',
+                    image: '/images/caesar.jpg',
+                    tags: ['Cold', 'Classic']
                 }
             ],
             'Desserts': [
@@ -594,8 +712,31 @@
                     name: 'Daily Special',
                     price: '$3.99',
                     description: 'Freshly baked dessert of the day.',
-                    image: '/images/dessert.jpg',
+                    image: '/images/daily_special.jpg',
                     tags: ['Sweet', 'Bakery']
+                },
+                {
+                    name: 'Fresh Fruit Cup',
+                    price: '$2.99',
+                    description: 'Seasonal fresh fruit selection.',
+                    image: '/images/fresh_fruit_cup.jpg',
+                    tags: ['Healthy', 'Fresh']
+                }
+            ],
+            'Sides': [
+                {
+                    name: 'Garlic Bread',
+                    price: '$2.99',
+                    description: 'Toasted bread with garlic butter and herbs.',
+                    image: '/images/Garlic-Bread.jpg',
+                    tags: ['Hot', 'Shareable']
+                },
+                {
+                    name: 'French Fries',
+                    price: '$2.49',
+                    description: 'Crispy golden fries with sea salt.',
+                    image: '/images/french-fries.jpg',
+                    tags: ['Hot', 'Crispy']
                 }
             ]
         },
@@ -605,14 +746,14 @@
                     name: 'Roast Chicken',
                     price: '$8.99',
                     description: 'Herb-roasted chicken with seasonal vegetables and mashed potatoes.',
-                    image: '/images/roast_chicken.jpg',
+                    image: '/images/roast-chicken.jpg',
                     tags: ['Hot', 'Popular']
                 },
                 {
                     name: 'Vegetable Curry',
                     price: '$7.99',
                     description: 'Mixed vegetables in a fragrant curry sauce, served with basmati rice.',
-                    image: '/images/veg_curry.jpg',
+                    image: '/images/vegetable-curry.jpg',
                     tags: ['Hot', 'Vegetarian']
                 }
             ],
@@ -621,7 +762,7 @@
                     name: 'Club Sandwich',
                     price: '$6.99',
                     description: 'Triple-decker sandwich with turkey, bacon, lettuce, and tomato.',
-                    image: '/images/club_sandwich.jpg',
+                    image: '/images/club-sandwich.jpg',
                     tags: ['Cold', 'Classic']
                 }
             ],
@@ -659,13 +800,6 @@
                     description: 'Freshly brewed Starbucks® Iced Coffee Blend served chilled and sweetened over ice.',
                     image: '/images/iced_coffee.jpg',
                     tags: ['Cold', 'Classic']
-                },
-                {
-                    name: 'Strawberry Açaí Refresher',
-                    price: '$4.25',
-                    description: 'Sweet strawberry flavors accented by passion fruit and açaí notes.',
-                    image: '/images/strawberry_refresher.jpg',
-                    tags: ['Cold', 'Refreshing']
                 }
             ],
             'Breakfast': [
@@ -691,7 +825,7 @@
                     name: 'Mediterranean Bowl',
                     price: '$7.99',
                     description: 'Quinoa, chickpeas, feta cheese, olives, and vegetables with lemon vinaigrette.',
-                    image: '/images/med_bowl.jpg',
+                    image: '/images/mediterranean-bowl-.jpg',
                     tags: ['Cold', 'Vegetarian']
                 }
             ],
@@ -718,7 +852,7 @@
                     name: 'Butter Chicken',
                     price: '$7.99',
                     description: 'Tender chicken in a rich, creamy tomato sauce served with rice and naan.',
-                    image: '/images/butter_chicken.jpg',
+                    image: '/images/butter-chicken.jpg',
                     tags: ['Hot', 'Indian']
                 }
             ],
@@ -727,7 +861,7 @@
                     name: 'Burrito Bowl',
                     price: '$7.99',
                     description: 'Rice, beans, protein, and toppings in a bowl with your choice of salsa.',
-                    image: '/images/burrito_bowl.jpg',
+                    image: '/images/Burrito_Bowl.jpg',
                     tags: ['Hot', 'Mexican']
                 }
             ]
@@ -738,7 +872,7 @@
                     name: 'Specialty Coffee',
                     price: '$2.99',
                     description: 'Freshly brewed coffee with your choice of flavor.',
-                    image: '/images/specialty_coffee.jpg',
+                    image: '/images/Specialty-coffee.jpg',
                     tags: ['Hot', 'Classic']
                 },
                 {
@@ -747,6 +881,13 @@
                     description: 'Spiced tea with steamed milk and honey.',
                     image: '/images/chai_latte.jpg',
                     tags: ['Hot', 'Spiced']
+                },
+                {
+                    name: 'Hot Chocolate',
+                    price: '$3.49',
+                    description: 'Rich and creamy hot chocolate topped with whipped cream.',
+                    image: '/images/hot_chocolate.jpg',
+                    tags: ['Hot', 'Sweet']
                 }
             ],
             'Pastries': [
@@ -754,7 +895,7 @@
                     name: 'Assorted Muffins',
                     price: '$2.99',
                     description: 'Freshly baked muffins in various flavors.',
-                    image: '/images/muffins.jpg',
+                    image: '/images/assorted-muffins.jpg',
                     tags: ['Bakery', 'Sweet']
                 }
             ]
@@ -796,7 +937,8 @@
                 image.src = item.image;
                 image.alt = item.name;
                 image.onerror = function() {
-                    this.src = '/images/default_food.jpg';
+                    // Use a data URI for a simple gray placeholder
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjYwIiB5PSI2MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+Tm8gSW1hZ2U8L3RleHQ+PC9zdmc+';
                 };
 
                 const details = document.createElement('div');
@@ -861,4 +1003,4 @@
 </script>
 
 </body>
-</html>
+</html> 

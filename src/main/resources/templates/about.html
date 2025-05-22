@@ -194,19 +194,27 @@
         }
         .about-section {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
+            padding: 2.5rem;
+            border-radius: 12px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
+            text-align: center;
         }
         .about-section h1 {
             color: #DA291C;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-align: center;
         }
         .about-section p {
             color: #1E1E1E;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .overview-title {
             font-size: 1.8rem;
@@ -225,7 +233,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin: 1.5rem 0;
+            margin: 1.5rem auto;
+            max-width: 1200px;
         }
         .service-card {
             background: white;
@@ -234,6 +243,25 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .service-icon {
+            font-size: 2rem;
+            color: #DA291C;
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            color: #DA291C;
+            margin-bottom: 1rem;
+        }
+        .service-card p {
+            color: #1E1E1E;
+            line-height: 1.6;
         }
         .service-card.featured {
             grid-column: 1 / -1;
@@ -290,24 +318,282 @@
             font-weight: bold;
             color: #DA291C;
             margin-bottom: 1rem;
+            text-align: center;
         }
         .service-desc {
             color: #1E1E1E;
             margin-bottom: 1rem;
+            text-align: center;
         }
         .service-meta {
             color: #1E1E1E;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
         .service-link {
             color: #DA291C;
             text-decoration: none;
             font-weight: bold;
             display: inline-block;
-            margin-top: 1rem;
+            margin: 1rem auto;
+            text-align: center;
         }
         .service-link:hover {
             text-decoration: underline;
+        }
+
+        /* Meal Plan Styles */
+        .meal-plan-section, .soup-plan-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .meal-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .meal-plan {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease;
+        }
+
+        .meal-plan:hover {
+            transform: translateY(-5px);
+        }
+
+        .meal-plan h4 {
+            color: rgb(218, 41, 28);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .meal-plan ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .meal-plan li {
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .meal-plan li:last-child {
+            border-bottom: none;
+        }
+
+        .meal-plan-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .meal-plan-info h4 {
+            color: rgb(218, 41, 28);
+            margin-bottom: 1rem;
+        }
+
+        .meal-plan-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+
+        .meal-plan-info li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meal-plan-info li:before {
+            content: "✓";
+            color: rgb(218, 41, 28);
+            font-weight: bold;
+        }
+
+        .expiry-note {
+            background: #fff3f3;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        /* Soup Plan Styles */
+        .soup-plan-details {
+            margin-top: 1.5rem;
+        }
+
+        .soup-plan-details h4 {
+            color: rgb(218, 41, 28);
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .soup-plan-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+
+        .soup-plan-details li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .soup-plan-details li:before {
+            content: "✓";
+            color: rgb(218, 41, 28);
+            font-weight: bold;
+        }
+
+        .soup-note {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        .section-title {
+            color: rgb(218, 41, 28);
+            text-align: center;
+            margin: 3rem 0 2rem 0;
+            font-size: 2rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        /* Side Panel Styles */
+        .content-wrapper {
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+            justify-content: center;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            margin-top: 0;
+            max-width: 1000px;
+        }
+
+        .side-panel {
+            width: 400px;
+            flex-shrink: 0;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 0;
+        }
+
+        .info-box h3 {
+            color: #DA291C;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .hours-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .hours-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-list strong {
+            display: block;
+            color: #DA291C;
+            margin-bottom: 0.25rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .payment-method i {
+            color: #DA291C;
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .side-panel {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .info-box {
+                flex: 1 1 calc(50% - 1rem);
+                min-width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .side-panel {
+                flex-direction: column;
+            }
+            .info-box {
+                flex: 1 1 100%;
+            }
         }
     </style>
 </head>
@@ -333,27 +619,69 @@
         </ul>
     </div>
 
-    <div class="content">
-        <div class="about-section">
-            <h1>About Seneca Eats</h1>
-            <p>Welcome to Seneca Eats, your premier dining destination across Seneca Polytechnic's campuses. We are committed to providing high-quality, diverse, and nutritious food options to our students, faculty, and staff.</p>
-            
-            <p>Our mission is to create a welcoming and inclusive dining environment that caters to various dietary preferences and requirements. We take pride in offering a wide range of culinary choices, from international cuisines to local favorites, all prepared with fresh ingredients and sustainable practices.</p>
-            
-            <p>At Seneca Eats, we understand the importance of healthy eating in academic success. That's why we work closely with nutritionists and food service professionals to ensure our menu items meet the highest standards of quality and nutrition.</p>
-            
-            <p>We are constantly evolving and improving our services based on community feedback. Your satisfaction is our priority, and we welcome your suggestions to help us better serve you.</p>
+    <div class="content-wrapper" style="max-width: 1200px; margin: 0.5rem auto; padding: 0 1rem; display: flex; gap: 2rem; align-items: flex-start;">
+        <div class="main-content" style="flex: 1; max-width: 1000px; margin-top: 0;">
+            <div class="about-section" style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 2rem;">
+                <h1 style="font-size: 1.8rem; color: #DA291C; margin: 0 0 1.5rem 0; text-align: left;">About Seneca Eats</h1>
+                <img src="/images/Seneca-Eats.jpg" alt="Seneca Eats" style="width: 90%; height: 400px; object-fit: cover; border-radius: 12px; margin: 0 auto 1.5rem auto; display: block;">
+                <p style="margin-bottom: 1rem;">Welcome to Seneca Eats, your premier dining destination across Seneca Polytechnic's campuses. We are committed to providing high-quality, diverse, and nutritious food options to our students, faculty, and staff.</p>
+                
+                <p style="margin-bottom: 1rem;">Our mission is to create a welcoming and inclusive dining environment that caters to various dietary preferences and requirements. We take pride in offering a wide range of culinary choices, from international cuisines to local favorites, all prepared with fresh ingredients and sustainable practices.</p>
+                
+                <p>We are constantly evolving and improving our services based on community feedback. Your satisfaction is our priority, and we welcome your suggestions to help us better serve you.</p>
+            </div>
         </div>
 
-        <div class="overview-title">Seneca Eats Services Overview</div>
+        <div class="side-panel" style="width: 400px; flex-shrink: 0; display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="info-box" style="background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; min-width: 0;">
+                <h3 style="margin: 0 0 0.75rem 0; font-size: 1.2rem; color: #DA291C;">Hours of Operation</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem;">
+                    <li style="padding: 0.25rem 0; border-bottom: 1px solid #f0f0f0;">
+                        <strong style="display: block; color: #333; margin-bottom: 0.15rem;">King Campus</strong>
+                        <div>Mon-Fri: 8:00 AM - 8:00 PM</div>
+                        <div>Sat-Sun: 10:00 AM - 6:00 PM</div>
+                    </li>
+                    <li style="padding: 0.25rem 0; border-bottom: 1px solid #f0f0f0;">
+                        <strong style="display: block; color: #333; margin-bottom: 0.15rem;">Newnham Campus</strong>
+                        <div>Mon-Fri: 7:30 AM - 8:00 PM</div>
+                        <div>Sat-Sun: 10:00 AM - 6:00 PM</div>
+                    </li>
+                    <li style="padding: 0.25rem 0;">
+                        <strong style="display: block; color: #333; margin-bottom: 0.15rem;">Seneca @York</strong>
+                        <div>Mon-Fri: 8:00 AM - 8:00 PM</div>
+                        <div>Sat-Sun: 10:00 AM - 6:00 PM</div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="info-box" style="background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; min-width: 0;">
+                <h5 style="font-size: 1.5rem; color: #DA291C; margin: 0 0 1rem 0; text-align: left;">Seneca OneCard</h5>
+                <img src="/images/one-card.jpg" alt="Seneca OneCard" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                <p style="margin-bottom: 0.5rem;">Your official Seneca identification card. Use it for:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                    <span style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">✓ Meal Plans</span>
+                    <span style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">✓ Campus purchases</span>
+                    <span style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">✓ Parking plans</span>
+                    <span style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">✓ Photocopying</span>
+                    <span style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">✓ Printing</span>
+                    <span style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">✓ Library access</span>
+                </div>
+                <a class="service-link" href="https://onecard.senecapolytechnic.ca/" target="_blank" style="display: inline-block; margin-top: 0.5rem; text-align: center; width: 100%;">Get Your OneCard</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+        <div class="overview-title" style="font-size: 2rem; color: #DA291C; margin: 2rem 0 1rem 0; text-align: center; font-weight: bold;">Seneca Eats Services Overview</div>
         <p style="text-align: center; color: #1E1E1E; margin-bottom: 2rem;">
             This overview outlines the various food-related services and support available to Seneca College students.
         </p>
 
-        <div class="section-title">I. Food Support Programs</div>
+        <div class="section-title" style="font-size: 1.8rem; color: #DA291C; margin: 2rem 0 1rem 0; text-align: center;">I. Food Support Programs</div>
         <div class="card-grid">
             <div class="service-card featured">
-                <img src="/static/images/FoodBankService.jpg" alt="Food Bank Service" class="service-image">
+                <img src="/images/FoodBankService.jpg" alt="Food Bank Service" class="service-image">
                 <div class="service-title">SSF Eats – Food Support Program (Food Bank)</div>
                 <div class="service-desc">Provides monthly food assistance to full-time Seneca students in need, offered as food hampers or grocery gift cards. This program is designed to support students facing food insecurity and ensure they can focus on their academic success.</div>
                 <div class="service-meta"><strong>Eligibility:</strong> Must be enrolled full-time during the Summer 2025 semester.</div>
@@ -362,36 +690,99 @@
             </div>
         </div>
 
-        <div class="section-title">II. Campus Dining Facilities</div>
-        <div class="card-grid">
-            <div class="service-card">
-                <img src="/static/images/MicrowaveStations.jpg" alt="Microwave Stations" class="service-image">
+        <div class="section-title" style="font-size: 1.8rem; color: #DA291C; margin: 2rem 0 1rem 0; text-align: center;">II. Campus Facilities</div>
+        <div class="card-grid" style="margin: 1rem 0;">
+            <div class="service-card" style="background: white; border: 1px solid rgba(218, 41, 28, 0.1); transition: transform 0.3s ease;">
+                <img src="/images/MicrowaveStations.jpg" alt="Microwave Stations" class="service-image">
                 <div class="service-title">Microwave Stations</div>
                 <div class="service-desc">Convenient microwave stations available across campus for students to heat their meals.</div>
             </div>
-            <div class="service-card">
-                <img src="/static/images/VendingMachines.jpg" alt="Vending Machines" class="service-image">
+            <div class="service-card" style="background: white; border: 1px solid rgba(218, 41, 28, 0.1); transition: transform 0.3s ease;">
+                <img src="/images/VendingMachines.jpg" alt="Vending Machines" class="service-image">
                 <div class="service-title">Vending Machines</div>
                 <div class="service-desc">24/7 access to snacks and beverages through strategically placed vending machines.</div>
             </div>
-            <div class="service-card">
-                <img src="/static/images/ConvenienceStore.jpg" alt="Convenience Store" class="service-image">
+            <div class="service-card" style="background: white; border: 1px solid rgba(218, 41, 28, 0.1); transition: transform 0.3s ease;">
+                <img src="/images/ConvenienceStore.jpg" alt="Convenience Store" class="service-image">
                 <div class="service-title">Convenience Store</div>
                 <div class="service-desc">On-campus convenience store offering a variety of snacks, beverages, and essential items.</div>
             </div>
         </div>
 
-        <div class="section-title">III. Special Services</div>
-        <div class="card-grid">
-            <div class="service-card">
-                <img src="/static/images/CulturalEvents.jpg" alt="Cultural Events" class="service-image">
+        <div class="section-title" style="font-size: 1.8rem; color: #DA291C; margin: 2rem 0 1rem 0; text-align: center;">III. Special Services</div>
+        <div class="card-grid" style="margin: 1rem 0;">
+            <div class="service-card" style="background: white; border: 1px solid rgba(218, 41, 28, 0.1); transition: transform 0.3s ease;">
+                <img src="/images/CulturalEvents.jpg" alt="Cultural Events" class="service-image">
                 <div class="service-title">Cultural Events</div>
                 <div class="service-desc">Special dining events celebrating diverse cultures and cuisines throughout the academic year.</div>
             </div>
-            <div class="service-card">
-                <img src="/static/images/ExamReliefService.jpg" alt="Exam Relief Service" class="service-image">
+            <div class="service-card" style="background: white; border: 1px solid rgba(218, 41, 28, 0.1); transition: transform 0.3s ease;">
+                <img src="/images/ExamReliefService.jpg" alt="Exam Relief Service" class="service-image">
                 <div class="service-title">Exam Relief Service</div>
                 <div class="service-desc">Special meal services and extended hours during exam periods to support students.</div>
+            </div>
+        </div>
+
+        <div class="section-title" style="font-size: 1.8rem; color: #DA291C; margin: 2rem 0 1rem 0; text-align: center;">IV. Dining Plans</div>
+        <div class="card-grid" style="margin: 1rem 0;">
+            <div class="service-card featured" style="background: white; border: 1px solid rgba(218, 41, 28, 0.1); transition: transform 0.3s ease;">
+                <img src="/images/Seneca-Dining.jpg" alt="Seneca Dining" class="service-image">
+                <div class="service-title">Campus Meal Plans</div>
+                <div class="service-desc">Flexible meal plans with bonus dollars and HST-free benefits for all students. Choose from various options to suit your needs and budget.</div>
+                
+                <div class="meal-plans-grid">
+                    <div class="meal-plan">
+                        <h4>Casual</h4>
+                        <ul>
+                            <li><strong>You Pay:</strong> $550</li>
+                            <li><strong>Bonus:</strong> $50</li>
+                            <li><strong>HST-Free:</strong> Yes</li>
+                            <li><strong>Duration:</strong> 2 months</li>
+                        </ul>
+                    </div>
+                    <div class="meal-plan">
+                        <h4>Light Eater</h4>
+                        <ul>
+                            <li><strong>You Pay:</strong> $1,495</li>
+                            <li><strong>Bonus:</strong> $100</li>
+                            <li><strong>HST-Free:</strong> Yes</li>
+                            <li><strong>Duration:</strong> Two Terms</li>
+                        </ul>
+                    </div>
+                    <div class="meal-plan">
+                        <h4>Semester Plan</h4>
+                        <ul>
+                            <li><strong>You Pay:</strong> $995</li>
+                            <li><strong>Bonus:</strong> $80</li>
+                            <li><strong>HST-Free:</strong> Yes</li>
+                            <li><strong>Duration:</strong> One Term</li>
+                        </ul>
+                    </div>
+                    <div class="meal-plan">
+                        <h4>Ultimate Plan</h4>
+                        <ul>
+                            <li><strong>You Pay:</strong> $1,990</li>
+                            <li><strong>Bonus:</strong> $200</li>
+                            <li><strong>HST-Free:</strong> Yes</li>
+                            <li><strong>Duration:</strong> Two Terms</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="service-meta">
+                    <strong>How to Use:</strong> Works like a debit card on your OneCard
+                </div>
+                <div class="service-meta">
+                    <strong>Locations:</strong> Available at Newnham, King, and Seneca@York Campus
+                </div>
+                <div class="service-meta">
+                    <strong>Note:</strong> Unused "You Pay" amounts transfer to OneCard dollars after expiry. Bonus Dollars become forfeit.
+                </div>
+                <div class="service-meta" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>Purchase Your Meal Plan:</strong>
+                    <p style="margin: 0.5rem 0;">All meal plans must be purchased through the Seneca OneCard system.</p>
+                    <a class="service-link" href="https://onecard.senecapolytechnic.ca/" target="_blank" style="display: inline-block; margin-top: 0.5rem;">Purchase on OneCard Portal</a>
+                </div>
             </div>
         </div>
     </div>
@@ -421,7 +812,7 @@
             <div style="flex: 1 1 250px; min-width: 250px;">
                 <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Seneca Eats</h3>
                 <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                    <li style="margin-bottom: 8px;"><strong style="color: #DA291C;">Locations:</strong></li>
+                    <li style="margin-bottom: 8px;"><strong style="color: #fff;">Locations:</strong></li>
                     <li>Newnham Campus</li>
                     <li>Seneca@York Campus</li>
                     <li>King Campus</li>
@@ -430,16 +821,16 @@
             <div style="flex: 1 1 250px; min-width: 250px;">
                 <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Hours</h3>
                 <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                    <li><strong style="color: #DA291C;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
-                    <li><strong style="color: #DA291C;">Weekends:</strong> Varies by location</li>
+                    <li><strong style="color: #fff;">Weekdays:</strong> 8:00 AM – 8:00 PM</li>
+                    <li><strong style="color: #fff;">Weekends:</strong> Varies by location</li>
                 </ul>
             </div>
             <div style="flex: 1 1 250px; min-width: 250px;">
                 <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.5rem; letter-spacing: 1px;">Contact</h3>
                 <ul style="list-style: none; padding: 0; color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                    <li><strong style="color: #DA291C;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
-                    <li><strong style="color: #DA291C;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
-                    <li><strong style="color: #DA291C;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
+                    <li><strong style="color: #fff;">Address:</strong><br>1750 Finch Avenue East<br>Toronto, Ontario, Canada<br>M2J 2X5</li>
+                    <li><strong style="color: #fff;">Email:</strong> <a href="mailto:cafeteria@senecapolytechnic.ca" style="color: #fff; text-decoration: none; transition: color 0.3s;">cafeteria@senecapolytechnic.ca</a></li>
+                    <li><strong style="color: #fff;">Phone:</strong> <a href="tel:+14164915050" style="color: #fff; text-decoration: none; transition: color 0.3s;">+1 416.491.5050</a></li>
                 </ul>
             </div>
             <div style="flex: 1 1 250px; min-width: 250px;">

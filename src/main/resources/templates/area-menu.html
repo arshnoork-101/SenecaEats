@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Menu</title>
+    <title>Seneca Eats - Your Campus Food Guide</title>
     <style>
         body {
             background-color: #f8f9fa;
@@ -39,11 +39,23 @@
             cursor: pointer;
             background-color: #fff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-size: cover;
+            background-position: center;
         }
 
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 0.8;
         }
 
         .card h3 {
@@ -132,14 +144,42 @@
         }
 
         .menu-items li {
-            padding: 0.75rem 0;
+            padding: 1rem;
             border-bottom: 1px solid #f0f0f0;
             font-size: 1.1rem;
             color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
         }
 
-        .menu-items li:last-child {
-            border-bottom: none;
+        .menu-items li:hover {
+            background-color: #f8f9fa;
+        }
+
+        .menu-item-price {
+            color: rgb(218, 41, 28);
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .status-open {
+            background-color: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .status-closed {
+            background-color: #fbe9e7;
+            color: #d32f2f;
         }
 
         .hours-info {
@@ -168,11 +208,760 @@
             font-style: italic;
             padding: 2rem;
         }
+
+        /* Header Styles */
+        .header {
+            background-color: rgb(218, 41, 28);
+            color: white;
+            padding: 1.5rem;
+            margin: -2rem -2rem 2rem -2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-button {
+            background-color: white;
+            color: rgb(218, 41, 28);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+            transform: translateX(-2px);
+        }
+
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: rgb(218, 41, 28);
+            box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.1);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid rgb(218, 41, 28);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Info Cards */
+        .info-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: rgb(218, 41, 28);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card i {
+            color: rgb(218, 41, 28);
+        }
+
+        /* Location Map */
+        .location-map {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        /* Popular Times */
+        .popular-times {
+            margin-top: 1rem;
+        }
+
+        .time-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            position: relative;
+        }
+
+        .time-bar-fill {
+            position: absolute;
+            height: 100%;
+            background: rgb(218, 41, 28);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .tips-section h3 {
+            color: rgb(218, 41, 28);
+            margin-top: 0;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-icon {
+            color: rgb(218, 41, 28);
+            font-size: 1.2rem;
+        }
+
+        /* Menu Item Details */
+        .menu-item-details {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .menu-item-allergens {
+            font-size: 0.8rem;
+            color: #d32f2f;
+            margin-top: 0.25rem;
+        }
+
+        .dietary-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .dietary-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Special Features Section */
+        .features-section {
+            background: linear-gradient(135deg, rgb(218, 41, 28) 0%, #ff6b6b 100%);
+            color: white;
+            padding: 3rem 1rem;
+            margin: 2rem -2rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Promotions Section */
+        .promotions-section {
+            padding: 2rem 1rem;
+            background: #f8f9fa;
+            margin: 2rem -2rem;
+        }
+
+        .promotion-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .promotion-badge {
+            background: rgb(218, 41, 28);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 2rem 1rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: #f0f0f0;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Events Section */
+        .events-section {
+            padding: 2rem 1rem;
+            background: #f8f9fa;
+            margin: 2rem -2rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-date {
+            color: rgb(218, 41, 28);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Feedback Section */
+        .feedback-section {
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .feedback-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .feedback-button {
+            background: rgb(218, 41, 28);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .feedback-button:hover {
+            background: #ff6b6b;
+        }
+
+        /* Meal Plan Styles */
+        .meal-plan-card, .soup-plan-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .service-content {
+            width: 100%;
+        }
+
+        .meal-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .meal-plan {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .meal-plan h4 {
+            color: rgb(218, 41, 28);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .meal-plan ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .meal-plan li {
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .meal-plan-info {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .meal-plan-info h4 {
+            color: rgb(218, 41, 28);
+            margin-bottom: 1rem;
+        }
+
+        .meal-plan-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+
+        .meal-plan-info li {
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meal-plan-info li:before {
+            content: "✓";
+            color: rgb(218, 41, 28);
+        }
+
+        .expiry-note {
+            background: #fff3f3;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Soup Plan Styles */
+        .soup-plan-details {
+            margin-top: 1.5rem;
+        }
+
+        .soup-plan-details h4 {
+            color: rgb(218, 41, 28);
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .soup-plan-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+
+        .soup-plan-details li {
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .soup-plan-details li:before {
+            content: "✓";
+            color: rgb(218, 41, 28);
+        }
+
+        .soup-note {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
 
-<h1 th:text="'Menu for ' + ${area}">Menu for Campus Area</h1>
+<div class="header">
+    <button class="back-button" onclick="window.history.back()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        Back
+    </button>
+    <h1 th:text="'Menu for ' + ${area}">Menu for Campus Area</h1>
+    <div style="width: 100px;"></div>
+</div>
+
+<div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search menu items..." onkeyup="filterMenuItems(this.value)">
+</div>
+
+<!-- New Information Section -->
+<div class="info-section">
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Location & Hours</h3>
+            <ul>
+                <li><i>📍</i> <span th:text="${area} + ' Location'">Location</span></li>
+                <li><i>🕒</i> <span th:text="'Open: ' + ${openTime} + ' - ' + ${closeTime}">Hours</span></li>
+                <li><i>📞</i> <span th:text="${area} + ' Contact'">Contact</span></li>
+            </ul>
+            <div class="location-map">
+                [Interactive Map Placeholder]
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3>Popular Times</h3>
+            <div class="popular-times">
+                <div>Morning (8AM-11AM)</div>
+                <div class="time-bar">
+                    <div class="time-bar-fill" style="width: 75%"></div>
+                </div>
+                <div>Lunch (11AM-2PM)</div>
+                <div class="time-bar">
+                    <div class="time-bar-fill" style="width: 90%"></div>
+                </div>
+                <div>Afternoon (2PM-5PM)</div>
+                <div class="time-bar">
+                    <div class="time-bar-fill" style="width: 60%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3>Dietary Options</h3>
+            <ul>
+                <li><i>🌱</i> Vegetarian Options</li>
+                <li><i>🌾</i> Gluten-Free Options</li>
+                <li><i>🥜</i> Nut-Free Options</li>
+                <li><i>🥛</i> Dairy-Free Options</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tips-section">
+        <h3>Helpful Tips</h3>
+        <div class="tip-item">
+            <span class="tip-icon">💡</span>
+            <div>
+                <strong>Peak Hours:</strong> Visit between 11:30 AM and 1:30 PM for the busiest times. Consider coming before or after for shorter lines.
+            </div>
+        </div>
+        <div class="tip-item">
+            <span class="tip-icon">💳</span>
+            <div>
+                <strong>Payment Options:</strong> We accept cash, credit cards, and student meal plans. Mobile payments are also available.
+            </div>
+        </div>
+        <div class="tip-item">
+            <span class="tip-icon">♿</span>
+            <div>
+                <strong>Accessibility:</strong> The venue is fully accessible with ramps and elevators available.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Special Features Section -->
+<div class="features-section">
+    <h2>Why Choose Seneca Eats?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>Student Discounts</h3>
+            <p>Exclusive deals for Seneca students with valid ID</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Quick Service</h3>
+            <p>Pre-order and skip the line with our mobile app</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌱</div>
+            <h3>Healthy Options</h3>
+            <p>Fresh, nutritious meals for every diet</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h3>Easy Payment</h3>
+            <p>Multiple payment options including meal plans</p>
+        </div>
+    </div>
+</div>
+
+<!-- Promotions Section -->
+<div class="promotions-section">
+    <h2>Current Promotions</h2>
+    <div class="promotion-card">
+        <span class="promotion-badge">NEW</span>
+        <div>
+            <h3>Student Meal Plan Bonus</h3>
+            <p>Get 10% extra value when you purchase a meal plan this semester!</p>
+        </div>
+    </div>
+    <div class="promotion-card">
+        <span class="promotion-badge">LIMITED TIME</span>
+        <div>
+            <h3>Early Bird Special</h3>
+            <p>20% off breakfast items before 9 AM</p>
+        </div>
+    </div>
+</div>
+
+<!-- Services Section -->
+<div class="services-section">
+    <h2>Additional Services</h2>
+    
+    <!-- Meal Plans Card -->
+    <div class="service-card meal-plan-card">
+        <div class="service-icon">🍽️</div>
+        <div class="service-content">
+            <h3>Campus Meal Plans</h3>
+            <p>Flexible meal plans with bonus dollars and HST-free benefits</p>
+            
+            <div class="meal-plans-grid">
+                <div class="meal-plan">
+                    <h4>Casual</h4>
+                    <ul>
+                        <li><strong>You Pay:</strong> $550</li>
+                        <li><strong>Bonus:</strong> $50</li>
+                        <li><strong>HST-Free:</strong> Yes</li>
+                        <li><strong>Duration:</strong> 2 months</li>
+                    </ul>
+                </div>
+                <div class="meal-plan">
+                    <h4>Light Eater</h4>
+                    <ul>
+                        <li><strong>You Pay:</strong> $1,495</li>
+                        <li><strong>Bonus:</strong> $100</li>
+                        <li><strong>HST-Free:</strong> Yes</li>
+                        <li><strong>Duration:</strong> Two Terms</li>
+                    </ul>
+                </div>
+                <div class="meal-plan">
+                    <h4>Semester Plan</h4>
+                    <ul>
+                        <li><strong>You Pay:</strong> $995</li>
+                        <li><strong>Bonus:</strong> $80</li>
+                        <li><strong>HST-Free:</strong> Yes</li>
+                        <li><strong>Duration:</strong> One Term</li>
+                    </ul>
+                </div>
+                <div class="meal-plan">
+                    <h4>Ultimate Plan</h4>
+                    <ul>
+                        <li><strong>You Pay:</strong> $1,990</li>
+                        <li><strong>Bonus:</strong> $200</li>
+                        <li><strong>HST-Free:</strong> Yes</li>
+                        <li><strong>Duration:</strong> Two Terms</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="meal-plan-info">
+                <h4>How to Use Your Meal Plan</h4>
+                <ul>
+                    <li>Works like a debit card on your OneCard</li>
+                    <li>Accepted at all Seneca Dining Service locations</li>
+                    <li>Available at Newnham, King, and Seneca@York Campus</li>
+                    <li>Also accepted at Subway in Newnham Campus Residence</li>
+                </ul>
+                <p class="expiry-note"><strong>Note:</strong> Unused "You Pay" amounts transfer to OneCard dollars after expiry. Bonus Dollars become forfeit.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Soup Plan Card -->
+    <div class="service-card soup-plan-card">
+        <div class="service-icon">🥣</div>
+        <div class="service-content">
+            <h3>Seneca Soup Program</h3>
+            <p>Free, healthy meals for all enrolled students</p>
+            
+            <div class="soup-plan-details">
+                <h4>Program Features</h4>
+                <ul>
+                    <li>Fresh soup made daily</li>
+                    <li>Available to all full-time and part-time students</li>
+                    <li>No cost to participate</li>
+                    <li>Simple sign-up process</li>
+                </ul>
+                
+                <h4>Dietary Options</h4>
+                <ul>
+                    <li>Halal options available</li>
+                    <li>Vegetarian choices</li>
+                    <li>Vegan selections</li>
+                    <li>Gluten-free alternatives</li>
+                </ul>
+                
+                <p class="soup-note">Visit Seneca Dining for more information about Dining Services.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">📱</div>
+        <div>
+            <h3>Mobile Ordering</h3>
+            <p>Order ahead and pick up at your convenience</p>
+        </div>
+    </div>
+    <div class="service-card">
+        <div class="service-icon">🎂</div>
+        <div>
+            <h3>Catering Services</h3>
+            <p>Perfect for events and group meetings</p>
+        </div>
+    </div>
+    <div class="service-card">
+        <div class="service-icon">🎓</div>
+        <div>
+            <h3>Student Events</h3>
+            <p>Special menus for orientation and graduation</p>
+        </div>
+    </div>
+</div>
+
+<!-- Events Section -->
+<div class="events-section">
+    <h2>Upcoming Events</h2>
+    <div class="event-card">
+        <div class="event-date">March 15, 2024</div>
+        <h3>International Food Festival</h3>
+        <p>Experience cuisines from around the world at Seneca's annual food festival</p>
+    </div>
+    <div class="event-card">
+        <div class="event-date">March 20, 2024</div>
+        <h3>Healthy Eating Workshop</h3>
+        <p>Learn about nutrition and healthy eating habits</p>
+    </div>
+</div>
+
+<!-- Feedback Section -->
+<div class="feedback-section">
+    <h2>Help Us Improve</h2>
+    <div class="feedback-form">
+        <input type="text" class="feedback-input" placeholder="Your Name">
+        <input type="email" class="feedback-input" placeholder="Your Email">
+        <textarea class="feedback-input" rows="4" placeholder="Your Feedback"></textarea>
+        <button class="feedback-button">Submit Feedback</button>
+    </div>
+</div>
 
 <div class="container">
     <!-- Starbucks Menu -->
@@ -234,9 +1023,9 @@
     </div>
 </div>
 
-<div class="hours-info">
-    <p><strong>Operating Hours:</strong></p>
-    <p th:text="'Open: ' + ${openTime} + ' - Close: ' + ${closeTime}">Hours</p>
+<div class="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading menu items...</p>
 </div>
 
 <script>
@@ -266,75 +1055,121 @@
     };
 
     function showStarbucksMenu() {
+        showLoading();
         const modal = document.getElementById('menuModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalItems = document.getElementById('modalItems');
         
-        // Get the clicked category from the card's h3 text
         const category = event.target.closest('.card').querySelector('h3').textContent;
-        
-        // Set the title
         modalTitle.textContent = category;
-        
-        // Clear previous items
         modalItems.innerHTML = '';
         
-        // Add new items
         const items = starbucksMenu[category] || [];
         items.forEach(item => {
             const li = document.createElement('li');
-            li.textContent = item;
+            const price = (Math.random() * 5 + 2).toFixed(2);
+            const calories = Math.floor(Math.random() * 500 + 100);
+            const allergens = ['Milk', 'Soy', 'Wheat'].filter(() => Math.random() > 0.5);
+            
+            li.innerHTML = `
+                <div>
+                    <span>${item}</span>
+                    <div class="menu-item-details">
+                        ${calories} calories
+                    </div>
+                    <div class="menu-item-allergens">
+                        ${allergens.length ? 'Contains: ' + allergens.join(', ') : ''}
+                    </div>
+                    <div class="dietary-icons">
+                        ${Math.random() > 0.5 ? '<span class="dietary-icon">V</span>' : ''}
+                        ${Math.random() > 0.5 ? '<span class="dietary-icon">GF</span>' : ''}
+                    </div>
+                </div>
+                <span class="menu-item-price">$${price}</span>
+            `;
             modalItems.appendChild(li);
         });
         
-        // Show modal
         modal.style.display = 'flex';
+        hideLoading();
     }
 
     function showTimHortonsMenu() {
+        showLoading();
         const modal = document.getElementById('menuModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalItems = document.getElementById('modalItems');
         
-        // Set the title
         modalTitle.textContent = 'Popular Items';
-        
-        // Clear previous items
         modalItems.innerHTML = '';
         
-        // Add new items
         const items = timHortonsMenu['Popular Items'];
         items.forEach(item => {
             const li = document.createElement('li');
-            li.textContent = item;
+            const price = (Math.random() * 5 + 2).toFixed(2);
+            const calories = Math.floor(Math.random() * 500 + 100);
+            const allergens = ['Milk', 'Soy', 'Wheat'].filter(() => Math.random() > 0.5);
+            
+            li.innerHTML = `
+                <div>
+                    <span>${item}</span>
+                    <div class="menu-item-details">
+                        ${calories} calories
+                    </div>
+                    <div class="menu-item-allergens">
+                        ${allergens.length ? 'Contains: ' + allergens.join(', ') : ''}
+                    </div>
+                    <div class="dietary-icons">
+                        ${Math.random() > 0.5 ? '<span class="dietary-icon">V</span>' : ''}
+                        ${Math.random() > 0.5 ? '<span class="dietary-icon">GF</span>' : ''}
+                    </div>
+                </div>
+                <span class="menu-item-price">$${price}</span>
+            `;
             modalItems.appendChild(li);
         });
         
-        // Show modal
         modal.style.display = 'flex';
+        hideLoading();
     }
 
     function showMarketplaceMenu() {
+        showLoading();
         const modal = document.getElementById('menuModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalItems = document.getElementById('modalItems');
         
-        // Set the title
         modalTitle.textContent = 'Popular Items';
-        
-        // Clear previous items
         modalItems.innerHTML = '';
         
-        // Add new items
         const items = marketplaceMenu['Popular Items'];
         items.forEach(item => {
             const li = document.createElement('li');
-            li.textContent = item;
+            const price = (Math.random() * 5 + 2).toFixed(2);
+            const calories = Math.floor(Math.random() * 500 + 100);
+            const allergens = ['Milk', 'Soy', 'Wheat'].filter(() => Math.random() > 0.5);
+            
+            li.innerHTML = `
+                <div>
+                    <span>${item}</span>
+                    <div class="menu-item-details">
+                        ${calories} calories
+                    </div>
+                    <div class="menu-item-allergens">
+                        ${allergens.length ? 'Contains: ' + allergens.join(', ') : ''}
+                    </div>
+                    <div class="dietary-icons">
+                        ${Math.random() > 0.5 ? '<span class="dietary-icon">V</span>' : ''}
+                        ${Math.random() > 0.5 ? '<span class="dietary-icon">GF</span>' : ''}
+                    </div>
+                </div>
+                <span class="menu-item-price">$${price}</span>
+            `;
             modalItems.appendChild(li);
         });
         
-        // Show modal
         modal.style.display = 'flex';
+        hideLoading();
     }
     
     function closeModal() {
@@ -355,6 +1190,52 @@
         if (event.key === 'Escape') {
             closeModal();
         }
+    });
+
+    function filterMenuItems(searchTerm) {
+        const modalItems = document.getElementById('modalItems');
+        const items = modalItems.getElementsByTagName('li');
+        
+        searchTerm = searchTerm.toLowerCase();
+        
+        for (let item of items) {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(searchTerm) ? '' : 'none';
+        }
+    }
+
+    function showLoading() {
+        document.querySelector('.loading').style.display = 'block';
+    }
+
+    function hideLoading() {
+        document.querySelector('.loading').style.display = 'none';
+    }
+
+    // Add smooth scrolling for better navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add event listeners for feedback form
+    document.querySelector('.feedback-button').addEventListener('click', function() {
+        alert('Thank you for your feedback!');
+        document.querySelector('.feedback-form').reset();
+    });
+
+    // Add smooth scrolling for all sections
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
     });
 </script>
 
