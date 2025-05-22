@@ -42,10 +42,6 @@ experience.
 - 🖼️ **HTML5**, **CSS3**, **JavaScript** – UI design
 - 📱 **Responsive Design** – Mobile-first UI/UX
 
-## 📋 Prerequisites
-
-- Java 17 or higher
-- Maven
 
 ## 🚀 Getting Started
 
