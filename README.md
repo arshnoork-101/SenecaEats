@@ -1,93 +1,54 @@
-# 🍽️ SenecaEats - Campus Food Service Platform
-
-<div align="center">
+# 🍽️ SenecaEats - Cafeteria Web App
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-blue)
-![Status](https://img.shields.io/badge/Status-Active-success)
 
 > Built with 💻 Java + Spring Boot | Styled for 📱 mobile-first experiences | Designed to make campus life tastier 😋
 
-</div>
+## 🎯 Key Benefits
+- 📱 **Mobile-First Design**: Access menus on any device
+- 🕒 **Real-Time Updates**: Get instant menu changes
+- 🎨 **Intuitive Interface**: Clean, modern design
+- 🔒 **Secure Authentication**: Safe login system
 
-## 📋 Table of Contents
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Demo Credentials](#-demo-credentials)
-- [Project Structure](#-project-structure)
-- [Contributing](#-contributing)
-- [License](#-license)
+## 🚀 Features
 
-## 🌟 Overview
-
-SenecaEats is a modern, user-friendly platform designed to revolutionize how students and staff at Seneca College interact with campus food services. Our platform brings together all campus cafeterias, food courts, and dining options into one seamless experience.
-
-### 🎯 Key Benefits
-- 📱 **Mobile-First Design**: Access menus and place orders on any device
-- 🕒 **Real-Time Updates**: Get instant notifications about menu changes and special offers
-- 🎨 **Intuitive Interface**: Clean, modern design that's easy to navigate
-- 🔒 **Secure Authentication**: Safe and reliable user authentication system
-
-## ✨ Features
-
-### 🍔 Food Service Management
-- Comprehensive menu management system
-- Real-time order processing
-- Special dietary requirement indicators
-- Daily specials and promotions
-
-### 👤 User Experience
-- Personalized user profiles
-- Order history tracking
-- Favorite items list
-- Customizable preferences
-
-### 🔒 Security
-- Secure user authentication
-- Role-based access control
-- Data encryption
-- Session management
+- Food menu management
+- Order processing
+- User authentication and authorization
+- Image upload and management using Cloudinary
+- Responsive web interface using Thymeleaf
+- Database persistence with JPA/Hibernate
 
 ## 🛠️ Tech Stack
 
-### Backend
-- **Java 17**: Core programming language
-- **Spring Boot 3.2.3**: Application framework
-- **Spring Data JPA**: Data persistence
-- **H2 Database**: Development database
-- **Maven**: Build automation
+### 🔙 Backend
+- ⚙️ **Java 17** – Core language
+- 🚀 **Spring Boot 3.2.3** – Backend framework
+- 🌐 **Spring MVC** – RESTful web layer
+- 🧰 **SLF4J** – Logging
+- 📦 **Maven** – Build and dependency management
 
-### Frontend
-- **Thymeleaf**: Server-side templating
-- **Bootstrap**: Responsive design
-- **JavaScript**: Dynamic interactions
-- **CSS3**: Modern styling
+### 🎨 Frontend
+- 🧩 **Thymeleaf** – Server-side rendering engine
+- 🖼️ **HTML5**, **CSS3**, **JavaScript** – UI design
+- 📱 **Responsive Design** – Mobile-first UI/UX
 
-### DevOps
-- **Git**: Version control
-- **GitHub**: Code repository
-- **Maven**: Dependency management
+## 📋 Prerequisites
+
+- Java 17 or higher
+- Maven
+- Cloudinary account (for image upload functionality)
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Java 17 or higher
-- Maven
-- Git
-
-### Installation Steps
-
-1. **Clone the Repository**
+1. Clone the repository:
 ```bash
 git clone https://github.com/arshnoork-101/SenecaEats.git
 cd SenecaEats
 ```
 
-2. **Configure Environment**
-   - Create `application.properties` in `src/main/resources/`
+2. Configure Cloudinary:
+   - Create a `application.properties` file in `src/main/resources/`
    - Add your Cloudinary credentials:
    ```properties
    cloudinary.cloud-name=your_cloud_name
@@ -95,15 +56,17 @@ cd SenecaEats
    cloudinary.api-secret=your_api_secret
    ```
 
-3. **Build and Run**
+3. Build the project:
 ```bash
 mvn clean install
+```
+
+4. Run the application:
+```bash
 mvn spring-boot:run
 ```
 
-4. **Access the Application**
-   - Open your browser
-   - Navigate to `http://localhost:8080`
+The application will be available at `http://localhost:8080`
 
 ## 🔑 Demo Credentials
 
@@ -122,6 +85,14 @@ src/main/java/com/seneca/cafeteria/cafeteriaapp/
 └── CafeteriaappApplication.java  # Main application class
 ```
 
+## 🔧 Configuration
+
+The application uses the following key configurations:
+- H2 Database for development
+- Thymeleaf for templating
+- Spring Security for authentication
+- Cloudinary for image management
+
 ## 🤝 Contributing
 
 We welcome contributions! Here's how you can help:
@@ -132,25 +103,19 @@ We welcome contributions! Here's how you can help:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-### 📝 Pull Request Process
-1. Update the README.md with details of changes
-2. Update the documentation
-3. Ensure all tests pass
-4. Follow the existing code style
-
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 👥 Authors
 
-- **Arsh Noor** - *Initial work* - [GitHub Profile](https://github.com/arshnoork-101)
+- Arsh Noor - Initial work
 
 ## 🙏 Acknowledgments
 
-- Seneca College for inspiration and support
-- Spring Boot Team for the amazing framework
-- All contributors who have helped shape this project
+- Seneca College
+- Spring Boot Team
+- Cloudinary
 
 ---
 
