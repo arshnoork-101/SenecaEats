@@ -2,6 +2,10 @@
 
 ![Screenshot 2025-06-12 181843](https://github.com/user-attachments/assets/71bfd504-5e62-4388-8414-30d876484d8c)
 
+### FULL DEMO VIDEO DOWN HERE!!! CHECK IT OUT
+
+https://drive.google.com/file/d/1iAypbn7HNX1h6E352C92bCn_6n1qjSfP/view?usp=drive_link
+
 </div>
 
 ## 🌟 Overview
