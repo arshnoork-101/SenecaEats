@@ -1,6 +1,6 @@
 # 🍽️ SenecaEats - Cafeteria Web App
 
-![Java](https://img.shields.io/badge/Java-17-orange)
+![Screenshot 2025-06-12 181843](https://github.com/user-attachments/assets/71bfd504-5e62-4388-8414-30d876484d8c)
 
 </div>
 
